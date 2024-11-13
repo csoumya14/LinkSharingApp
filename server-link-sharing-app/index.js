@@ -1,4 +1,4 @@
-const express = require('express');
+/* const express = require('express');
 const app = express();
 
 let links = [
@@ -31,6 +31,21 @@ let profile = {
   image: '',
 };
 
+const requestLogger = (request, response, next) => {
+  console.log('Method: ', request.method);
+  console.log('Path: ', request.path);
+  console.log('Body: ', request.body);
+  console.log('---');
+  next();
+};
+
+app.use(express.json());
+app.use(requestLogger);
+
+const unknownEndpoint = (request, response) => {
+  response.status(400).send({ error: 'unknown endpoint' });
+};
+
 app.get('/', (request, response) => {
   response.send('<h1>Hello World!</h1>');
 });
@@ -41,7 +56,7 @@ app.get('/api/links', (request, response) => {
 
 app.get('/api/links/:id', (request, response) => {
   const id = request.params.id;
-  const link = links.find(note => note.id === id);
+  const link = links.find(link => link.id === id);
   if (link) {
     response.json(link);
   } else {
@@ -50,9 +65,55 @@ app.get('/api/links/:id', (request, response) => {
   }
 });
 
+const generateId = () => {
+  const maxId = links.length > 0 ? Math.max(...links.map(link => Number(link.id))) : 0;
+  return String(maxId + 1);
+};
+
+app.post('/api/links', (request, response) => {
+  const link = request.body;
+  if (!link.platform || !link.link || !link.icon) {
+    return response.status(400).json({ error: 'Missing required fields' });
+  }
+
+  const newLink = {
+    id: generateId(), // Generate an ID
+    platform: link.platform,
+    link: link.link,
+    icon: link.icon,
+  };
+  links = links.concat(newLink);
+  console.log(link);
+  response.json(link);
+});
+
 app.get('/api/profile', (request, response) => {
   response.json(profile);
 });
+
+app.put('/api/profile', (request, response) => {
+  const updateData = request.body;
+  if (!updateData.firstname && !updateData.lastname && !updateData.email && !updateData.image) {
+    return response.status(400).json({ error: 'No fields provided to update' });
+  }
+
+  profile = {
+    ...profile,
+    ...updateData,
+  };
+  console.log(profile);
+  response.json(profile);
+});
+
+app.use(unknownEndpoint);
 const PORT = 3001;
 app.listen(PORT);
 console.log(`Server running on port ${PORT}`);
+ */
+
+const app = require('./app');
+const PORT = 3001;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/links
+Content-Type: application/json
+
+{
+  "platform": {
+    "value": "twitter",
+    "label": "Twitter",
+    "icon": "twitter"
+  },
+  "link": "https://twitter.com/csoumya14",
+  "icon": "twitterIcon"
+}

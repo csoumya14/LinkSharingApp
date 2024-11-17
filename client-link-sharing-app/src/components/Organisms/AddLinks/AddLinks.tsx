@@ -31,7 +31,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
   // Handle form submission
   const onSubmit: SubmitHandler<FormValues> = async data => {
     try {
-      await fetch('http://localhost:3001/links', {
+      await fetch('http://localhost:3001/api/links', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

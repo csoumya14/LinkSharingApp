@@ -2,8 +2,8 @@ PUT http://localhost:3001/api/profile
 Content-Type: application/json
 
 {
-  "firstname": "NewFirstName",
-  "lastname": "NewLastName",
-  "email": "newemail@example.com",
+  "firstname": "Soumya",
+  "lastname": "Chalakkal",
+  "email": "soumyachlakkal@gmail.com",
   "image": "newImageURL"
 }

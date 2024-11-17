@@ -1,51 +1,73 @@
-import { FC } from 'react';
-import { StyledContainer } from './ProfileDetails.style';
+import { FC, useEffect, useState } from 'react';
+import { ImageContainer, StyledContainer, StyledImageLabel } from './ProfileDetails.style';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { UploadImage } from '../../Atoms/SVGs/UploadImage/UploadImage';
 
 interface ProfileDetailsProps {}
 interface ProfileFormData {
   firstname: string;
   lastname: string;
   email: string;
-  image: File;
+  image: FileList;
 }
 export const ProfileDetails: FC<ProfileDetailsProps> = () => {
   const {
     register,
-    getValues,
     handleSubmit,
-    control,
-    reset,
+    watch,
     formState: { errors, isValid, isDirty },
   } = useForm<ProfileFormData>({
     mode: 'onChange',
   });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const imageFile = watch('image');
+
+  useEffect(() => {
+    if (imageFile && imageFile[0]) {
+      const file = imageFile[0];
+      /*A FileReader is a built in browser API that allows reading the contents of files
+      on the client side without uploading them to a server. */
+      const reader = new FileReader();
+      /*Callback for onloadend
+      reader.onloadend is an event handler triggered when the FileReader finishes reading the file. */
+      reader.onloadend = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(null);
+    }
+  }, [imageFile]);
 
   // Handle form submission
   const onSubmit: SubmitHandler<ProfileFormData> = async data => {
-    try {
-      // create formData object to handle both text data and image file
-      const formData = new FormData();
-      formData.append('firsname', data.firstname);
-      formData.append('lastname', data.lastname);
-      formData.append('email', data.email);
+    const formData = new FormData();
 
-      if (data.image) {
-        formData.append('image', data.image); //Append the image file
-      }
-      const response = await fetch('http://localhost:3001/profile', {
+    // Append text fields
+    formData.append('firstname', data.firstname);
+    formData.append('lastname', data.lastname);
+    formData.append('email', data.email);
+
+    // Append the file (extract the first file from FileList)
+    if (data.image && data.image[0]) {
+      formData.append('image', data.image[0].name);
+    }
+
+    try {
+      const response = await fetch('http://localhost:3001/api/profile', {
         method: 'PUT',
         body: formData,
       });
 
       if (!response.ok) {
-        throw new Error('Failed to submit profile data');
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const result = await response.json();
-      console.log('Profile data submitted successfully:', result);
+      setImagePreview(null);
+      console.log('Profile updated successfully:', result);
     } catch (error) {
       console.error('Error submitting profile data:', error);
     }
@@ -61,8 +83,29 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
       />
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Profile Image:</label>
-          <input type="file" accept="image/*" {...register('image')} />
+          {imagePreview ? (
+            <div>
+              <p>Image Preview:</p>
+              <img
+                src={imagePreview}
+                alt="Profile Preview"
+                style={{ width: '150px', height: '150px', objectFit: 'cover' }}
+              />
+            </div>
+          ) : (
+            <ImageContainer>
+              <input
+                type="file"
+                id="fileInput"
+                className="visually-hidden"
+                accept="image/*"
+                {...register('image', { required: 'Profile Image is required' })}
+              />
+              <StyledImageLabel htmlFor="fileInput">
+                <UploadImage /> <span>+Upload Image</span>
+              </StyledImageLabel>
+            </ImageContainer>
+          )}
         </div>
         <div>
           <label>First Name:</label>
@@ -90,8 +133,6 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
           />
           {errors.email && <p>{errors.email.message}</p>}
         </div>
-
-        <button type="submit">Submit Profile</button>
       </form>
 
       <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />

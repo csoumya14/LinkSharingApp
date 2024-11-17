@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const profileController = require('../controllers/profileController');
+const { getProfile, updateProfile, upload } = require('../controllers/profileController');
 
 // Route to get profile information
-router.get('/', profileController.getProfile);
+router.get('/', getProfile);
 
 // Route to update profile information
-router.put('/', profileController.updateProfile);
+router.put('/', upload.single('image'), updateProfile);
+/* upload.single('image'): specifies that the route expects a single file with the field name image*/
 
 module.exports = router;

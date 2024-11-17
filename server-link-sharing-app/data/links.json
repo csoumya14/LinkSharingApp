@@ -18,5 +18,17 @@
     },
     "link": "https://www.linkedin.com/in/soumya-chalakkal-60885246",
     "icon": "linkedinIcon"
+  },
+  {
+    "0": {
+      "platform": {
+        "value": "youtube",
+        "label": "YouTube",
+        "icon": "youtube"
+      },
+      "link": "https://www.youtube.com/soumyac8114",
+      "icon": "githubIcon"
+    },
+    "id": "3"
   }
 ]

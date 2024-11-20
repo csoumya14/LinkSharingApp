@@ -1,32 +1,39 @@
-import React from 'react';
-import { UseFormRegister, FieldError, RegisterOptions } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, Path, FieldValues } from 'react-hook-form';
 import { SVGLink } from '../../SVGs/SVGLink/SVGLink';
-import { StyledInput, Wrapper } from './Input.style';
+import { StyledErrorMessage, StyledInput, Wrapper } from './Input.style';
+import { ProfileFieldValues } from '../../../../types/formValues';
 
-type InputProps = {
-  name: string;
+interface InputProps<TFieldValues extends FieldValues> {
+  name: Path<TFieldValues>;
   type: string;
   placeholder?: string;
-  register: UseFormRegister<any>;
-  validation?: RegisterOptions; // Validation rules passed as a prop
-  error?: FieldError;
+  register: UseFormRegister<TFieldValues>;
+  validation?: Record<string, any>; // Validation rules passed as a prop
+  errors?: FieldErrors<ProfileFieldValues>;
   showIcon?: boolean;
-};
+}
 
-export const Input: React.FC<InputProps> = ({
+export const Input = <TFieldValues extends Record<string, any>>({
   name,
   type,
   placeholder,
   register,
   validation,
-  error,
+  errors,
   showIcon,
-}) => {
+}: InputProps<TFieldValues>) => {
+  const errorMessage = errors && (errors as any)[name]?.message?.toString(); // Cast to any to access nested error
   return (
     <Wrapper>
       {showIcon && <SVGLink />}
-      <StyledInput type={type} placeholder={placeholder} {...register(name, validation)} />
-      {error && <p>{error.message}</p>}
+      <StyledInput
+        type={type}
+        iconPresent={showIcon}
+        placeholder={placeholder}
+        errorPresent={!!errorMessage}
+        {...register(name, validation)}
+      />
+      {errorMessage && <StyledErrorMessage>{errorMessage}</StyledErrorMessage>}
     </Wrapper>
   );
 };

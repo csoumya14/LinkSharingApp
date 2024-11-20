@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { StyledLabel } from './InputLink.style';
 import { Input } from '../../Atoms/Form/Input/Input';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { FormValues } from '../../../types/formValues';
+import { LinkFieldValues } from '../../../types/formValues';
 import { validationPatterns } from '../../../utils/validationPattern';
 
 interface InputLinkProps {
-  errors: FieldErrors<FormValues>;
-  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<LinkFieldValues>;
+  register: UseFormRegister<LinkFieldValues>;
   getValues: (name: string) => any;
   index: number;
 }
@@ -15,11 +15,12 @@ export const InputLink: FC<InputLinkProps> = ({ index, register, errors, getValu
   return (
     <div>
       <StyledLabel>Link</StyledLabel>
-      <Input
+      <Input<LinkFieldValues>
         name={`links.${index}.link`}
         register={register}
         type="url"
         showIcon={true}
+        errors={errors}
         validation={{
           required: 'Link is required',
           validate: (value: string) => {
@@ -30,7 +31,7 @@ export const InputLink: FC<InputLinkProps> = ({ index, register, errors, getValu
           },
         }}
       />
-      {errors.links?.[index]?.link && <p>{errors.links[index].link?.message}</p>}
+      {/* {errors.links?.[index]?.link && <p>{errors.links[index].link?.message}</p>} */}
     </div>
   );
 };

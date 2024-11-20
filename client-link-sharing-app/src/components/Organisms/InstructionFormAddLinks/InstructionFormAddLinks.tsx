@@ -5,7 +5,6 @@ import {
   UseFieldArrayRemove,
   FieldErrors,
   UseFormRegister,
-  UseFormGetValues,
 } from 'react-hook-form';
 import {
   Container,
@@ -17,17 +16,17 @@ import { InstructionAddLinks } from '../InstructionAddLinks/InstructionAddLinks'
 import { InputLink } from '../../Molecules/InputLink/InputLink';
 import { SelectPlatform } from '../../Molecules/SelectPlatform/SelectPlatform';
 import { LinkIndexButton } from '../../Molecules/LinkIndexButton/LinkIndexButton';
-import { FormValues } from '../../../types/formValues';
+import { LinkFieldValues } from '../../../types/formValues';
 
 interface LinkFormProps {
   isFormVisible: boolean;
-  fields: FieldArrayWithId<FormValues, 'links', 'id'>[];
-  control: Control<FormValues, any>;
+  fields: FieldArrayWithId<LinkFieldValues, 'links', 'id'>[];
+  control: Control<LinkFieldValues, any>;
   handleAddNewLinkClick: () => void;
   getValues: (name: string) => any;
   remove: UseFieldArrayRemove;
-  errors: FieldErrors<FormValues>;
-  register: UseFormRegister<FormValues>;
+  errors: FieldErrors<LinkFieldValues>;
+  register: UseFormRegister<LinkFieldValues>;
 }
 
 // Define a type for the form data

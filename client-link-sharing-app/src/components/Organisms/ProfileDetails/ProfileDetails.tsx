@@ -1,24 +1,30 @@
 import { FC, useEffect, useState } from 'react';
-import { ImageContainer, StyledContainer, StyledImageLabel } from './ProfileDetails.style';
+import {
+  ImageContainer,
+  ImageWrapper,
+  StyledContainer,
+  StyledForm,
+  StyledImageLabel,
+  StyledSpan,
+} from './ProfileDetails.style';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { UploadImage } from '../../Atoms/SVGs/UploadImage/UploadImage';
+import { Banner } from '../../Atoms/Banner/Banner';
+import { InputFields } from '../../Molecules/InputFields/InputFields';
+import { ProfileFieldValues } from '../../../types/formValues';
 
 interface ProfileDetailsProps {}
-interface ProfileFormData {
-  firstname: string;
-  lastname: string;
-  email: string;
-  image: FileList;
-}
+
 export const ProfileDetails: FC<ProfileDetailsProps> = () => {
   const {
     register,
     handleSubmit,
+    reset,
     watch,
     formState: { errors, isValid, isDirty },
-  } = useForm<ProfileFormData>({
+  } = useForm<ProfileFieldValues>({
     mode: 'onChange',
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -42,12 +48,12 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
   }, [imageFile]);
 
   // Handle form submission
-  const onSubmit: SubmitHandler<ProfileFormData> = async data => {
+  const onSubmit: SubmitHandler<ProfileFieldValues> = async data => {
     const formData = new FormData();
 
     // Append text fields
-    formData.append('firstname', data.firstname);
-    formData.append('lastname', data.lastname);
+    formData.append('firstName', data.firstName);
+    formData.append('lastName', data.lastName);
     formData.append('email', data.email);
 
     // Append the file (extract the first file from FileList)
@@ -68,6 +74,7 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
       const result = await response.json();
       setImagePreview(null);
       console.log('Profile updated successfully:', result);
+      reset();
     } catch (error) {
       console.error('Error submitting profile data:', error);
     }
@@ -81,8 +88,8 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
         bannerLevel="p"
         bannerText="Add your details to create a personal touch to your profile"
       />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
+      <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <ImageWrapper>
           {imagePreview ? (
             <div>
               <p>Image Preview:</p>
@@ -102,38 +109,52 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
                 {...register('image', { required: 'Profile Image is required' })}
               />
               <StyledImageLabel htmlFor="fileInput">
-                <UploadImage /> <span>+Upload Image</span>
+                <UploadImage /> <StyledSpan>+Upload Image</StyledSpan>
               </StyledImageLabel>
             </ImageContainer>
           )}
-        </div>
-        <div>
-          <label>First Name:</label>
-          <input type="text" {...register('firstname', { required: 'First name is required' })} />
-          {errors.firstname && <p>{errors.firstname.message}</p>}
-        </div>
+          <Banner textLevel="p">Image must be below 1024x1024px. Use PNG or JPG format.</Banner>
+        </ImageWrapper>
 
-        <div>
-          <label>Last Name:</label>
-          <input type="text" {...register('lastname', { required: 'Last name is required' })} />
-          {errors.lastname && <p>{errors.lastname.message}</p>}
-        </div>
+        <InputFields
+          label="First name*"
+          type="text"
+          name="firstName"
+          placeholder="e.g.John"
+          register={register}
+          validationRules={{
+            required: "Can't be empty",
+          }}
+          errors={errors}
+        />
 
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            {...register('email', {
-              required: 'Email is required',
-              pattern: {
-                value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-                message: 'Invalid email address',
-              },
-            })}
-          />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-      </form>
+        <InputFields
+          label="Last name*"
+          type="text"
+          name="lastName"
+          placeholder="e.g.Appleseed"
+          register={register}
+          validationRules={{
+            required: "Can't be empty",
+          }}
+          errors={errors}
+        />
+        <InputFields
+          label="Email*"
+          type="email"
+          name="email"
+          placeholder="e.g.email@example.com"
+          errors={errors}
+          register={register}
+          validationRules={{
+            required: "Can't be empty",
+            pattern: {
+              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+              message: 'Invalid email address',
+            },
+          }}
+        />
+      </StyledForm>
 
       <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
     </StyledContainer>

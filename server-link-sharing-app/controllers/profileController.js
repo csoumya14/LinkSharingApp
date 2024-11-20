@@ -67,7 +67,7 @@ exports.updateProfile = async (req, res) => {
   const file = req.file;
 
   // Validate that there is at least one field to update
-  if (!updateData.firstname && !updateData.lastname && !updateData.email && !updateData.image) {
+  if (!updateData.firstName && !updateData.lastName && !updateData.email && !updateData.image) {
     return res.status(400).json({ error: 'No fields provided to update' });
   }
 

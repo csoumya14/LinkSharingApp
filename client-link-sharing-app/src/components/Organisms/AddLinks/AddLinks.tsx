@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { InstructionFormAddLinks } from '../InstructionFormAddLinks/InstructionFormAddLinks';
 import { StyledContainer } from './AddLinks.style';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
-import { FormValues } from '../../../types/formValues';
+import { LinkFieldValues } from '../../../types/formValues';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 
@@ -17,7 +17,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
     control,
     reset,
     formState: { errors, isValid, isDirty },
-  } = useForm<FormValues>({
+  } = useForm<LinkFieldValues>({
     mode: 'onChange',
     defaultValues: {
       links: [{ platform: null, link: '', icon: 'githubIcon' }], // Initialize with one set of fields
@@ -29,7 +29,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
     name: 'links',
   });
   // Handle form submission
-  const onSubmit: SubmitHandler<FormValues> = async data => {
+  const onSubmit: SubmitHandler<LinkFieldValues> = async data => {
     try {
       await fetch('http://localhost:3001/api/links', {
         method: 'POST',

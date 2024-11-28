@@ -1,19 +1,11 @@
 import { FC, useEffect, useState } from 'react';
-import {
-  ImageContainer,
-  ImageWrapper,
-  StyledContainer,
-  StyledForm,
-  StyledImageLabel,
-  StyledSpan,
-} from './ProfileDetails.style';
+import { StyledContainer, StyledForm } from './ProfileDetails.style';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { UploadImage } from '../../Atoms/SVGs/UploadImage/UploadImage';
-import { Banner } from '../../Atoms/Banner/Banner';
-import { InputFields } from '../../Molecules/InputFields/InputFields';
 import { ProfileFieldValues } from '../../../types/formValues';
+import { ImageProfileDetails } from '../../Molecules/ImageProfileDetails/ImageProfileDetails';
+import { TextProfileDetail } from '../../Molecules/TextProfileDetails/TextProfileDetails';
 
 interface ProfileDetailsProps {}
 
@@ -58,7 +50,7 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
 
     // Append the file (extract the first file from FileList)
     if (data.image && data.image[0]) {
-      formData.append('image', data.image[0].name);
+      formData.append('image', imageFile[0]);
     }
 
     try {
@@ -72,7 +64,6 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
       }
 
       const result = await response.json();
-      setImagePreview(null);
       console.log('Profile updated successfully:', result);
       reset();
     } catch (error) {
@@ -89,73 +80,9 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
         bannerText="Add your details to create a personal touch to your profile"
       />
       <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <ImageWrapper>
-          {imagePreview ? (
-            <div>
-              <p>Image Preview:</p>
-              <img
-                src={imagePreview}
-                alt="Profile Preview"
-                style={{ width: '150px', height: '150px', objectFit: 'cover' }}
-              />
-            </div>
-          ) : (
-            <ImageContainer>
-              <input
-                type="file"
-                id="fileInput"
-                className="visually-hidden"
-                accept="image/*"
-                {...register('image', { required: 'Profile Image is required' })}
-              />
-              <StyledImageLabel htmlFor="fileInput">
-                <UploadImage /> <StyledSpan>+Upload Image</StyledSpan>
-              </StyledImageLabel>
-            </ImageContainer>
-          )}
-          <Banner textLevel="p">Image must be below 1024x1024px. Use PNG or JPG format.</Banner>
-        </ImageWrapper>
-
-        <InputFields
-          label="First name*"
-          type="text"
-          name="firstName"
-          placeholder="e.g.John"
-          register={register}
-          validationRules={{
-            required: "Can't be empty",
-          }}
-          errors={errors}
-        />
-
-        <InputFields
-          label="Last name*"
-          type="text"
-          name="lastName"
-          placeholder="e.g.Appleseed"
-          register={register}
-          validationRules={{
-            required: "Can't be empty",
-          }}
-          errors={errors}
-        />
-        <InputFields
-          label="Email*"
-          type="email"
-          name="email"
-          placeholder="e.g.email@example.com"
-          errors={errors}
-          register={register}
-          validationRules={{
-            required: "Can't be empty",
-            pattern: {
-              value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-              message: 'Invalid email address',
-            },
-          }}
-        />
+        <ImageProfileDetails imagePreview={imagePreview} register={register} />
+        <TextProfileDetail register={register} errors={errors} />
       </StyledForm>
-
       <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
     </StyledContainer>
   );

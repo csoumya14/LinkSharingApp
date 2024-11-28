@@ -9,7 +9,8 @@ export const StyledButton = styled.button<{ variant: 'primary' | 'secondary' }>`
   transition: background-color 0.3s ease;
   background-color: ${({ variant, theme }) =>
     variant === 'primary' ? theme.palette.primary.purple : theme.palette.neutral.white};
-  color: ${props => props.theme.palette.primary.purple};
+  color: ${({ variant, theme }) =>
+    variant === 'primary' ? theme.palette.neutral.white : theme.palette.primary.purple};
   border: 1px solid ${props => props.theme.palette.primary.purple};
 
   &:disabled,

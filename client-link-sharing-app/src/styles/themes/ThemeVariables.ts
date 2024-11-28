@@ -8,6 +8,7 @@ const myTheme: DefaultTheme = {
       lightPurple: '#EFEBFF',
       veryDarkBlue: '#333333',
       grey: '#737373',
+      veryVeryLightGrey: '#EEEEEE',
       veryLightGrey: '#D9D9D9',
       offWhite: '#FAFAFA',
       White: '#FFFFFF',

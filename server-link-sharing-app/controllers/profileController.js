@@ -32,20 +32,19 @@ path.join(__dirname, '../uploads'): __dirname refers to the current directory of
 // configure multer storage
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../uploads'));
+    cb(null, path.join(__dirname, '../uploads')); //
   },
   filename: (req, file, cb) => {
-    if (!file.filename || !file.originalname) {
+    if (!file.originalname) {
       return cb(new Error('File data is missing'));
     }
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    cb(null, file.filename + '-' + uniqueSuffix + path.extname(file.originalname));
+    cb(null, Date.now() + path.extname(file.originalname).toLowerCase());
   },
 });
 
 /*This initializes multer with the specified storage configuration. The upload object is now ready
 to be used as middleware in routes to handle file uploads.*/
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 // Controller function to get profile data
 exports.getProfile = async (req, res) => {
@@ -62,6 +61,12 @@ exports.getProfile = async (req, res) => {
 
 // Controller function to update profile data
 exports.updateProfile = async (req, res) => {
+  console.log('Inside controller - req.file:', req.file); // Log file object
+  console.log('Inside controller - req.body:', req.body); // Log body object
+
+  if (!req.file || !req.body) {
+    return res.status(400).json({ error: 'File or fields not provided' });
+  }
   const updateData = req.body;
 
   const file = req.file;
@@ -80,7 +85,7 @@ exports.updateProfile = async (req, res) => {
 
     // If a file was uploaded, add the file path to the profile data
     if (file) {
-      profile.image = `/uploads/${file.filename}`; // Save relative path to the profile
+      profile.image = `${req.protocol}://${req.get('host')}/api/uploads/${file.filename}`; //`api/uploads/${file.filename}`; // Save relative path to the profile
     }
 
     // Write the updated profile back to profile.json

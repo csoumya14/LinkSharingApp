@@ -1,0 +1,1 @@
+GET http://localhost:3001/api/uploads/1732725350437.jpg

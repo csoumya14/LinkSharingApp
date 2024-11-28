@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "firstName": "nila",
-  "lastName": "Chalakkal",
-  "email": "soumyachlakkal@gmail.com",
-  "image": "newImageURL"
+  "lastName": "binor",
+  "email": "nilllakkal@gmail.com",
+  "image": "oldImageURL"
 }

@@ -20,7 +20,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
   } = useForm<LinkFieldValues>({
     mode: 'onChange',
     defaultValues: {
-      links: [{ platform: null, link: '', icon: 'githubIcon' }], // Initialize with one set of fields
+      links: [{ platform: null, link: '' }], // Initialize with one set of fields
     },
   });
 
@@ -47,7 +47,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
 
   const handleAddNewLinkClick = () => {
     setIsFormVisible(true);
-    append({ platform: null, link: '', icon: '' }); // Append a new set of fields
+    append({ platform: null, link: '' }); // Append a new set of fields
   };
   return (
     <StyledContainer>

@@ -9,13 +9,14 @@ import {
 } from 'react-hook-form';
 import { StyledErrorMessage } from './FormSelect.style';
 import Select from 'react-select';
+import { CustomOption } from '../../../Molecules/CustomOption/CustomOption';
+import { CustomSingleValue } from '../../../Molecules/CustomSingleValue/CustomSingleValue';
 
 type FormSelectProps = {
   name: string;
   control: Control<any>; // Type `any` can be replaced with your form's specific data type
   rules?: RegisterOptions;
   options: Array<{ value: string; label: string }>; // Options for the select
-  components?: any; // Custom components, like `Option`, for Select
   isClearable?: boolean;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
 };
@@ -23,7 +24,7 @@ type FormSelectProps = {
 const customStyles = {
   control: (base: any, state: { isFocused: any }) => ({
     ...base,
-
+    display: 'flex',
     // match with the menu
     borderRadius: 10,
     // Overwrittes the different states of border
@@ -42,7 +43,6 @@ const customStyles = {
     ...base,
     // override border radius to match the box
     borderRadius: 10,
-
     // kill the gap
     marginTop: 10,
     textAlign: 'left',
@@ -68,7 +68,6 @@ const FormSelect: React.FC<FormSelectProps> = ({
   control,
   rules,
   options,
-  components,
   isClearable = false,
   error,
 }) => {
@@ -84,7 +83,10 @@ const FormSelect: React.FC<FormSelectProps> = ({
             {...field}
             options={options}
             styles={customStyles}
-            components={components}
+            components={{
+              Option: CustomOption,
+              SingleValue: CustomSingleValue,
+            }}
             isClearable={isClearable}
             defaultValue={options[0].value}
           />

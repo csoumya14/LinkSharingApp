@@ -1,8 +1,7 @@
 export interface LinkFieldValues {
   links: {
-    platform: { value: string; label: string } | null;
+    platform: { value: string; label: string; icon: string } | null;
     link: string;
-    icon: string;
   }[];
 }
 

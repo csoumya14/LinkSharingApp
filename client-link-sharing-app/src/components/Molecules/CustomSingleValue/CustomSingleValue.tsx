@@ -1,18 +1,19 @@
 import { FC } from 'react';
-import { OptionProps } from 'react-select';
-import { Container } from './CustomOption.style';
+import { SingleValueProps } from 'react-select';
 import { IconKey, iconMapping } from '../../../utils/iconMapping';
+import { Container } from './CustomSingleValue.style';
 
 interface CustomOptionProps {
   label: string;
   icon?: React.ReactNode;
 }
 
-export const CustomOption: FC<OptionProps<CustomOptionProps, false>> = props => {
-  const { data, innerRef, innerProps } = props;
+export const CustomSingleValue: FC<SingleValueProps<CustomOptionProps, false>> = props => {
+  const { data } = props;
   const IconComponent = iconMapping[data.icon as IconKey];
+
   return (
-    <Container ref={innerRef} {...innerProps}>
+    <Container>
       {IconComponent && (
         <span>
           <IconComponent />

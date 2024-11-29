@@ -19,6 +19,21 @@ declare module 'styled-components' {
       neutral: {
         white: string;
       };
+      link: {
+        githubBlack: string;
+        frontendmentorWhite: string;
+        twitterBlue: string;
+        linkedinBlue: string;
+        youtubeRed: string;
+        facebookBlue: string;
+        twitchPink: string;
+        devtoGrey: string;
+        codewarsBrown: string;
+        freecodecampViolet: string;
+        gitlabRed: string;
+        hashnodeBlue: string;
+        stackoverflowOrange: string;
+      };
     };
     typography: {
       headingM: {

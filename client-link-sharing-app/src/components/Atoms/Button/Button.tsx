@@ -17,7 +17,6 @@ export const Button: FC<ButtonProps> = ({
   ariaLabel,
   ...props
 }) => {
-  console.log({ isDisabled });
   return (
     <StyledButton
       variant={variant}

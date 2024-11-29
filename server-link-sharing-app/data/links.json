@@ -1,23 +1,25 @@
 [
   {
-    "id": "1",
-    "platform": {
-      "value": "github",
-      "label": "GitHub",
-      "icon": "github"
+    "0": {
+      "platform": {
+        "value": "linkedin",
+        "label": "LinkedIn",
+        "icon": "linkedin"
+      },
+      "link": "https://www.linkedin.com/in/soumya-chalakkal-60885246"
     },
-    "link": "https://github.com/csoumya14",
-    "icon": "githubIcon"
+    "id": "1"
   },
   {
-    "id": "2",
-    "platform": {
-      "value": "linkedin",
-      "label": "LinkedIn",
-      "icon": "linkedin"
+    "0": {
+      "platform": {
+        "value": "github",
+        "label": "GitHub",
+        "icon": "github"
+      },
+      "link": "https://github.com/csoumya14"
     },
-    "link": "https://www.linkedin.com/in/soumya-chalakkal-60885246",
-    "icon": "linkedinIcon"
+    "id": "2"
   },
   {
     "0": {
@@ -26,8 +28,7 @@
         "label": "YouTube",
         "icon": "youtube"
       },
-      "link": "https://www.youtube.com/soumyac8114",
-      "icon": "githubIcon"
+      "link": "https://www.youtube.com/soumyac8114"
     },
     "id": "3"
   }

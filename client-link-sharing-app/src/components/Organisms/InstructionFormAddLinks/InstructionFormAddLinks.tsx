@@ -20,7 +20,7 @@ import { LinkFieldValues } from '../../../types/formValues';
 
 interface LinkFormProps {
   isFormVisible: boolean;
-  fields: FieldArrayWithId<LinkFieldValues, 'links', 'id'>[];
+  fields: FieldArrayWithId<LinkFieldValues>[];
   control: Control<LinkFieldValues, any>;
   handleAddNewLinkClick: () => void;
   getValues: (name: string) => any;

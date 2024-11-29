@@ -17,6 +17,21 @@ const myTheme: DefaultTheme = {
     neutral: {
       white: 'hsl(0, 0%, 100%)',
     },
+    link: {
+      githubBlack: '#1a1a1a',
+      frontendmentorWhite: '#ffffff',
+      twitterBlue: '#43b7e9',
+      linkedinBlue: '#2d68ff',
+      youtubeRed: '#ee3939',
+      facebookBlue: '#2442ac',
+      twitchPink: '#ee3fc8',
+      devtoGrey: '#333333',
+      codewarsBrown: '#8a1a50',
+      freecodecampViolet: '#302267',
+      gitlabRed: '#eb4925',
+      hashnodeBlue: '#0330d1',
+      stackoverflowOrange: '#ec7100',
+    },
   },
   typography: {
     headingM: {

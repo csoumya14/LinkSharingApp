@@ -20,6 +20,6 @@ app.use(
   },
   express.static(path.join(__dirname, 'uploads')),
 );
-app.use('/api/profile', profileRoutes); // Base URL for the profile router
+app.use('/api/profiles', profileRoutes); // Base URL for the profile router
 
 module.exports = app;

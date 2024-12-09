@@ -5,8 +5,7 @@ Content-Type: application/json
   "platform": {
     "value": "twitter",
     "label": "Twitter",
-    "icon": "twitter"
+    "icon": "twitterIcon"
   },
-  "link": "https://twitter.com/csoumya14",
-  "icon": "twitterIcon"
+   "link": "https://twitter.com/example"
 }

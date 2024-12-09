@@ -1,0 +1,21 @@
+PUT http://localhost:3001/api/profiles/1 HTTP/1.1
+Content-Type: multipart/form-data; boundary=---123456789
+
+-----123456789
+Content-Disposition: form-data; name="firstName"
+
+John
+-----123456789
+Content-Disposition: form-data; name="lastName"
+
+Doe
+-----123456789
+Content-Disposition: form-data; name="email"
+
+johndoe@example.com
+-----123456789
+Content-Disposition: form-data; name="image"; filename="image_123650291.JPG"
+Content-Type: image/jpeg
+
+< C:\Users\great\Downloads\image_123650291.JPG
+-----123456789--

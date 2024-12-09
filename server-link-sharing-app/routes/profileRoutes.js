@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 });
 
 // Route to get profile information
-router.get('/', getProfile);
+router.get('/:id', getProfile);
 
 /* router.put(
   '/',
@@ -31,7 +31,7 @@ router.get('/', getProfile);
 );
  */
 // Route to update profile information
-router.put('/', upload.single('image'), updateProfile);
+router.put('/:id', upload.single('image'), updateProfile);
 /* upload.single('image'): specifies that the route expects a single file with the field name image*/
 
 module.exports = router;

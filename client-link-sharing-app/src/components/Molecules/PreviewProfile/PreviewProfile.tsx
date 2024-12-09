@@ -41,7 +41,7 @@ export const PreviewProfile: FC<PreviewProfileProps> = () => {
           </ImageContainer>
           {profile.firstName ? (
             <Banner textLevel="h2">
-              `${profile.firstName} ${profile.lastName}`
+              {profile.firstName} {profile.lastName}
             </Banner>
           ) : (
             <NamePlaceholder>&nbsp;</NamePlaceholder>

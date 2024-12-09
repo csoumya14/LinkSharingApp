@@ -36,6 +36,8 @@ export const PreviewLinks: FC<PreviewLinkProps> = () => {
         const rawData: RawData = await response.json();
         // Transform the data to match LinkFieldValues['links'] type
         const transformedData: LinkFieldValues['links'] = Object.values(rawData).map(item => {
+          /*value of item[0] is assigned to variabel name nested and 
+          value of item[id] is assigned to variable named id */
           const { 0: nested, id } = item;
           return { ...nested, id };
         });

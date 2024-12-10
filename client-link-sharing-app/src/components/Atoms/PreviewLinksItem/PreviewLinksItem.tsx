@@ -6,5 +6,5 @@ interface PreviewLinkItemProps {
   children: React.ReactNode;
 }
 export const PreviewLinksItem: FC<PreviewLinkItemProps> = ({ linkType, children }) => {
-  return <LinkBox linkType={linkType}>{children}</LinkBox>;
+  return <LinkBox $linkType={linkType}>{children}</LinkBox>;
 };

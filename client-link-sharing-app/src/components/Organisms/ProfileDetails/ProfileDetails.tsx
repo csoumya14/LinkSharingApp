@@ -54,7 +54,7 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/profile', {
+      const response = await fetch('http://localhost:3001/api/profiles', {
         method: 'PUT',
         body: formData,
       });

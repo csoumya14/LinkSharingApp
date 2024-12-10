@@ -15,19 +15,25 @@ export const PreviewProfile: FC<PreviewProfileProps> = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchProfile = async () => {
+    const fetchProfile = async (id: number) => {
       try {
-        const response = await fetch('http://localhost:3001/api/profile');
+        const response = await fetch(`http://localhost:3001/api/profiles/${id}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-        const data: ProfileFieldValues = await response.json();
-        setProfile(data);
+        const data = await response.json();
+        const transformedData: ProfileFieldValues = {
+          email: data.email,
+          firstName: data.first_name,
+          lastName: data.last_name,
+          image: data.image, // Assuming image is a URL or FileList type
+        };
+        setProfile(transformedData);
       } catch (err) {
         setError((err as Error).message);
       }
     };
-    fetchProfile();
+    fetchProfile(1);
   }, []);
 
   return (

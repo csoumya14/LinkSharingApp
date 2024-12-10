@@ -3,7 +3,7 @@ const pool = require('../config/db'); // PostgreSQL connection pool
 // Controller function to get all links
 getLinks = async (req, res) => {
   try {
-    // Fetch all links from the database
+    // Fetches all rows from the links table in the database
     const result = await pool.query('SELECT * FROM links');
     res.json(result.rows);
   } catch (error) {
@@ -19,7 +19,11 @@ addLink = async (req, res) => {
   if (!platform || !link) {
     return res.status(400).json({ error: 'Platform and link are required' });
   }
-
+  /*SQL inserts a new row into the links table with four values: platform_value, platform_label
+platform_icon, link. $1, $2, $3, $4 are placeholders for dynamic values provided by 
+the array [platform.value, platform.label, platform.icon, link]
+RETURNING * After the insertion, this clause returns the entire newly added row. Useful to confirm the insertion
+and send the added record back to the client. */
   try {
     // Insert the new link into the database
     const result = await pool.query(

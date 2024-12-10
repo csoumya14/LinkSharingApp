@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const LinkBox = styled.div<{ linkType: string | undefined }>`
+export const LinkBox = styled.div<{ $linkType: string | undefined }>`
   display: flex;
   align-items: center;
   width: 80%;
@@ -8,8 +8,8 @@ export const LinkBox = styled.div<{ linkType: string | undefined }>`
   margin: 10px 0;
   border-radius: 8px;
   color: white;
-  background-color: ${({ linkType, theme }) => {
-    switch (linkType && linkType.toLowerCase()) {
+  background-color: ${({ $linkType, theme }) => {
+    switch ($linkType && $linkType.toLowerCase()) {
       case 'github':
         return theme.palette.link.githubBlack;
       case 'frontendmentor':

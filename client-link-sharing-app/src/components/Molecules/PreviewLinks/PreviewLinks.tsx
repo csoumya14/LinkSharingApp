@@ -5,22 +5,15 @@ import { PreviewLinkList } from '../PreviewLinkList/PreviewLinkList';
 
 interface PreviewLinkProps {}
 
-type RawDataItem = {
-  0: { platform: { icon: string; value: string; label: string }; link: string; icon: string };
-  id: string;
+type RawData = {
+  id: number;
+  profile_id: number | null;
+  platform_value: string;
+  platform_label: string;
+  platform_icon: string;
+  link: string;
 };
-type RawData = Record<string, RawDataItem>;
-/*type RawData = {
-  [key: string]: {
-    0: {
-      platform: { icon: string; value: string; label: string };
-      link: string;
-      icon: string;
-    };
-    id: string;
-  };
-};
- */
+
 export const PreviewLinks: FC<PreviewLinkProps> = () => {
   const [links, setLinks] = useState<LinkFieldValues['links']>([]);
   const [error, setError] = useState<string | null>(null);
@@ -33,14 +26,17 @@ export const PreviewLinks: FC<PreviewLinkProps> = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         // Fetch and parse the raw data
-        const rawData: RawData = await response.json();
+        const rawData: RawData[] = await response.json();
+
         // Transform the data to match LinkFieldValues['links'] type
-        const transformedData: LinkFieldValues['links'] = Object.values(rawData).map(item => {
-          /*value of item[0] is assigned to variabel name nested and 
-          value of item[id] is assigned to variable named id */
-          const { 0: nested, id } = item;
-          return { ...nested, id };
-        });
+        const transformedData: LinkFieldValues['links'] = rawData.map(item => ({
+          platform: {
+            value: item.platform_value || '',
+            label: item.platform_label || '',
+            icon: item.platform_icon || '',
+          },
+          link: item.link || '',
+        }));
 
         setLinks(transformedData);
       } catch (err) {

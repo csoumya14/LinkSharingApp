@@ -47,14 +47,14 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
     formData.append('firstName', data.firstName);
     formData.append('lastName', data.lastName);
     formData.append('email', data.email);
-
+    const profileId = 1;
     // Append the file (extract the first file from FileList)
     if (data.image && data.image[0]) {
       formData.append('image', imageFile[0]);
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/profiles', {
+      const response = await fetch(`http://localhost:3001/api/profiles/${profileId}`, {
         method: 'PUT',
         body: formData,
       });

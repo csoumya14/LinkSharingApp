@@ -30,14 +30,18 @@ export const AddLinks: FC<AddLinksProps> = () => {
   });
   // Handle form submission
   const onSubmit: SubmitHandler<LinkFieldValues> = async data => {
+    console.log(data.links);
     try {
-      await fetch('http://localhost:3001/api/links', {
+      const response = await fetch('http://localhost:3001/api/links', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(data.links),
       });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       alert('Links saved to JSON file!');
       reset(); // Reset form after submission
     } catch (error) {

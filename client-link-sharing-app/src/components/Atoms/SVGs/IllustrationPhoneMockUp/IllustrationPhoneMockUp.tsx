@@ -4,15 +4,16 @@ import { CustomSvgIcon } from '../CustomSVGIcons/CustomSVGIcons';
 type Props = {
   primaryColor?: ColorGamut;
   color?: string;
-  width?: string;
-  height?: string;
+  width: string;
+  height: string;
+  viewBox: string;
 };
 
-export const IllustrationPhoneMockUp: FC<Props> = () => (
+export const IllustrationPhoneMockUp: FC<Props> = ({ width, height, viewBox }) => (
   <CustomSvgIcon
-    viewBox="0 0 120 100"
-    width="120"
-    height="100"
+    viewBox={viewBox}
+    width={width}
+    height={height}
     title="Illustration of a  phone mock up"
     id="illustration-phone-mockup"
   >

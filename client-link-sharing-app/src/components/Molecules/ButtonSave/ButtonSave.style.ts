@@ -17,4 +17,7 @@ export const StyledButton = styled(Button)`
   margin: 1rem;
   color: ${props => props.theme.palette.neutral.white};
   border-color: none;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    align-self: flex-end;
+  }
 `;

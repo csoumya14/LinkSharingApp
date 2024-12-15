@@ -8,7 +8,10 @@ export const StyledLogo = styled.h1`
   /* Link inside the h1 */
   a {
     display: inline-block;
-    padding: 0.5rem;
+    padding: 0.6rem;
+  }
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    font-size: ${props => props.theme.typography.headingM.fontSize};
   }
 `;
 
@@ -19,19 +22,25 @@ export const StyledNav = styled.nav`
 
 export const StyledCustomNavLink = styled(CustomNavLink)`
   svg {
-    position: absolute;
-    left: 60%;
-    top: 60%;
-    transform: translate(-50%, -50%);
+    @media (max-width: ${props => props.theme.mediaSize.md}) {
+      position: absolute;
+      left: 60%;
+      top: 60%;
+      transform: translate(-80%, -90%);
+    }
   }
 `;
 
 export const StyledCustomPreviewNavLink = styled(CustomNavLink)`
   border: 1px solid ${props => props.theme.palette.primary.purple}; /* Custom focus outline */
   svg {
-    position: absolute;
-    left: 60%;
-    top: 60%;
-    transform: translate(-50%, -50%);
+    @media (max-width: ${props => props.theme.mediaSize.md}) {
+      display: block;
+      position: absolute;
+      left: 60%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+    }
+    display: none;
   }
 `;

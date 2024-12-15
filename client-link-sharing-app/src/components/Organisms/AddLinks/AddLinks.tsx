@@ -55,22 +55,24 @@ export const AddLinks: FC<AddLinksProps> = () => {
   };
   return (
     <StyledContainer>
-      <CustomizableTextContainer
-        headingText="Customize your links"
-        headingLevel="h2"
-        bannerLevel="p"
-        bannerText=" Add/edit/remove links below and then share all your profiles with the world!"
-      />
-      <InstructionFormAddLinks
-        isFormVisible={isFormVisible}
-        fields={fields}
-        control={control}
-        getValues={getValues}
-        handleAddNewLinkClick={handleAddNewLinkClick}
-        remove={remove}
-        errors={errors}
-        register={register}
-      />
+      <div>
+        <CustomizableTextContainer
+          headingText="Customize your links"
+          headingLevel="h2"
+          bannerLevel="p"
+          bannerText=" Add/edit/remove links below and then share all your profiles with the world!"
+        />
+        <InstructionFormAddLinks
+          isFormVisible={isFormVisible}
+          fields={fields}
+          control={control}
+          getValues={getValues}
+          handleAddNewLinkClick={handleAddNewLinkClick}
+          remove={remove}
+          errors={errors}
+          register={register}
+        />
+      </div>
       <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
     </StyledContainer>
   );

@@ -4,11 +4,10 @@ import { styled } from 'styled-components';
 export const StyledNavLink = styled(NavLink)`
   color: ${props => props.theme.palette.primary.purple};
   font-weight: bold;
-  font-size: 18px;
   text-decoration: none;
   display: flex;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
   width: 60px;
   height: 50px;
@@ -31,5 +30,8 @@ export const StyledNavLink = styled(NavLink)`
   }
   font-size: 0px;
   @media (min-width: ${props => props.theme.mediaSize.md}) {
+    font-size: 16px;
+    padding: 1rem;
+    width: fit-content;
   }
 `;

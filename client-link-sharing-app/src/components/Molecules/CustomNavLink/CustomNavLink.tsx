@@ -4,7 +4,7 @@ import { NavLinkProps } from 'react-router-dom';
 
 interface CustomNavLinkProps extends NavLinkProps {
   to: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   icon: React.ReactNode;
   id: string;
 }
@@ -17,7 +17,7 @@ export const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children, icon, id, 
       className={className}
     >
       {icon}
-      <span className="visually-hidden">{children}</span>
+      <span>{children}</span>
     </StyledNavLink>
   );
 };

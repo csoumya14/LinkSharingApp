@@ -26,10 +26,8 @@ export const NavBar: FC<NavBarProps> = () => {
           icon={<Logo />}
           id="logo"
           className={({ isActive }) => (isActive ? 'active' : '')}
-        >
-          Logo
-        </CustomNavLink>
-        Link Sharing app
+        />
+        devlinks
       </StyledLogo>
       <StyledCustomNavLink
         to="/add-links"
@@ -37,10 +35,10 @@ export const NavBar: FC<NavBarProps> = () => {
         id="add-links-text"
         className={({ isActive }) => (isActive ? 'active' : '')}
       >
-        Add Links
+        Links
       </StyledCustomNavLink>
       <StyledCustomNavLink to="/profile" icon={<Profile />} id="profile">
-        Profile
+        Profile Details
       </StyledCustomNavLink>
       <StyledCustomPreviewNavLink to="/preview" icon={<Preview />} id="preview">
         Preview

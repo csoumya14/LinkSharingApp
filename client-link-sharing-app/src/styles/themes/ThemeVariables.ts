@@ -53,7 +53,7 @@ const myTheme: DefaultTheme = {
   },
   mediaSize: {
     s: '576px',
-    md: '768px',
+    md: '767px',
     lg: '992px',
     xlg: '1200px',
   },

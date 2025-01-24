@@ -21,7 +21,6 @@ export const StyledNavLink = styled(NavLink)`
 
   &.active {
     color: ${props => props.theme.palette.primary.veryDarkBlue};
-    text-decoration: underline;
     background: ${props => props.theme.palette.primary.lightPurple};
   }
 

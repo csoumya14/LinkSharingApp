@@ -9,7 +9,7 @@ type Props = {
   viewBox: string;
 };
 
-export const IllustrationPhoneMockUp: FC<Props> = ({ width, height, viewBox }) => (
+export const IllustrationAddLinks: FC<Props> = ({ width, height, viewBox }) => (
   <CustomSvgIcon
     viewBox={viewBox}
     width={width}

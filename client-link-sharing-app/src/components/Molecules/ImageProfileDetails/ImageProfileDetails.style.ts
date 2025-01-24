@@ -33,12 +33,16 @@ export const StyledSpan = styled.span`
 `;
 
 export const ImageWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
   border-radius: 10px;
   padding: 1rem;
   background-color: ${props => props.theme.palette.primary.offWhite};
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+    align-items: center;
+  }
 `;
 export const StyledBannerHeading = styled(Banner)`
   font-size: ${props => props.theme.typography.bodyM.fontSize};

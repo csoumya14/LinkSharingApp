@@ -1,19 +1,23 @@
 import { styled } from 'styled-components';
 
 export const LinkBox = styled.div<{ $linkType: string | undefined }>`
-  display: flex;
+  display: grid;
+  grid-template-columns: 0.2fr 1fr 0.1fr;
   align-items: center;
-  width: 80%;
-  padding: 20px;
-  margin: 10px 0;
+  width: 100%;
+  padding: 12px;
   border-radius: 8px;
-  color: white;
+  color: ${({ $linkType, theme }) =>
+    $linkType?.toLowerCase() === 'frontendmentor'
+      ? theme.palette.primary.veryDarkBlue
+      : theme.palette.neutral.white};
+
   background-color: ${({ $linkType, theme }) => {
     switch ($linkType && $linkType.toLowerCase()) {
       case 'github':
         return theme.palette.link.githubBlack;
       case 'frontendmentor':
-        return theme.palette.link.youtubeRed;
+        return theme.palette.link.frontendmentorWhite;
       case 'twitter':
         return theme.palette.link.twitterBlue;
       case 'linkedin':
@@ -44,6 +48,9 @@ export const LinkBox = styled.div<{ $linkType: string | undefined }>`
   }};
 
   svg {
-    fill: white;
+    fill: ${({ $linkType, theme }) =>
+      $linkType?.toLowerCase() === 'frontendmentor'
+        ? theme.palette.primary.veryDarkBlue
+        : theme.palette.neutral.white};
   }
 `;

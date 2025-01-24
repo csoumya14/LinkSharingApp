@@ -9,9 +9,8 @@ export const GlobalStyles = createGlobalStyle`
 
   body {
     font-family: 'Instrument Sans', sans-serif;
-    background-color: #ffffff;
-    padding: 20px;
-    min-width: 320px;
+    background-color:#fafafa;
+    min-width: 100vw;
     min-height: 100vh;
   }
 

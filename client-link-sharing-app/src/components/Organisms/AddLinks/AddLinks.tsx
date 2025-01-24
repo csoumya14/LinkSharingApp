@@ -1,10 +1,12 @@
 import { FC, useState } from 'react';
 import { InstructionFormAddLinks } from '../InstructionFormAddLinks/InstructionFormAddLinks';
-import { StyledContainer } from './AddLinks.style';
+import { StyledContainer, Wrapper } from './AddLinks.style';
 import { SubmitHandler, useFieldArray, useForm } from 'react-hook-form';
 import { LinkFieldValues } from '../../../types/formValues';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
+import { PhonePreview } from '../../Molecules/PhonePreview/PhonePreview';
+import { useMediaQuery } from 'react-responsive';
 
 interface AddLinksProps {}
 
@@ -51,29 +53,33 @@ export const AddLinks: FC<AddLinksProps> = () => {
 
   const handleAddNewLinkClick = () => {
     setIsFormVisible(true);
-    append({ platform: null, link: '' }); // Append a new set of fields
+    append({ platform: null, link: '' });
   };
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 992px)' });
   return (
-    <StyledContainer>
-      <div>
-        <CustomizableTextContainer
-          headingText="Customize your links"
-          headingLevel="h2"
-          bannerLevel="p"
-          bannerText=" Add/edit/remove links below and then share all your profiles with the world!"
-        />
-        <InstructionFormAddLinks
-          isFormVisible={isFormVisible}
-          fields={fields}
-          control={control}
-          getValues={getValues}
-          handleAddNewLinkClick={handleAddNewLinkClick}
-          remove={remove}
-          errors={errors}
-          register={register}
-        />
-      </div>
-      <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
-    </StyledContainer>
+    <Wrapper>
+      {isLargeScreen && <PhonePreview links={fields} />}
+      <StyledContainer>
+        <div>
+          <CustomizableTextContainer
+            headingText="Customize your links"
+            headingLevel="h2"
+            bannerLevel="p"
+            bannerText=" Add/edit/remove links below and then share all your profiles with the world!"
+          />
+          <InstructionFormAddLinks
+            isFormVisible={isFormVisible}
+            fields={fields}
+            control={control}
+            getValues={getValues}
+            handleAddNewLinkClick={handleAddNewLinkClick}
+            remove={remove}
+            errors={errors}
+            register={register}
+          />
+        </div>
+        <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
+      </StyledContainer>
+    </Wrapper>
   );
 };

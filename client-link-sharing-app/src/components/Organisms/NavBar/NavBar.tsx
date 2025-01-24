@@ -11,6 +11,7 @@ import { Profile } from '../../Atoms/SVGs/Profile/Profile';
 import { AddLinks } from '../../Atoms/SVGs/AddLinks/AddLinks';
 import { Preview } from '../../Atoms/SVGs/Preview/Preview';
 import { useLocation } from 'react-router-dom';
+import { LogoLargeScreen } from '../../Atoms/SVGs/LogoLargeScreen/LogoLargeScreen';
 
 interface NavBarProps {}
 export const NavBar: FC<NavBarProps> = () => {
@@ -23,24 +24,24 @@ export const NavBar: FC<NavBarProps> = () => {
       <StyledLogo>
         <CustomNavLink
           to="/"
-          icon={<Logo />}
+          iconLarge={<LogoLargeScreen />}
+          iconSmall={<Logo />}
           id="logo"
           className={({ isActive }) => (isActive ? 'active' : '')}
         />
-        devlinks
       </StyledLogo>
       <StyledCustomNavLink
         to="/add-links"
-        icon={<AddLinks />}
+        iconSmall={<AddLinks />}
         id="add-links-text"
         className={({ isActive }) => (isActive ? 'active' : '')}
       >
         Links
       </StyledCustomNavLink>
-      <StyledCustomNavLink to="/profile" icon={<Profile />} id="profile">
+      <StyledCustomNavLink to="/profile" iconSmall={<Profile />} id="profile">
         Profile Details
       </StyledCustomNavLink>
-      <StyledCustomPreviewNavLink to="/preview" icon={<Preview />} id="preview">
+      <StyledCustomPreviewNavLink to="/preview" iconSmall={<Preview />} id="preview">
         Preview
       </StyledCustomPreviewNavLink>
     </StyledNav>

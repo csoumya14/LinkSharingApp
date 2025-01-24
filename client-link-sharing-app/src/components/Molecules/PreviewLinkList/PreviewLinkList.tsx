@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { PreviewLinksItem } from '../../Atoms/PreviewLinksItem/PreviewLinksItem';
 import { IconKey, iconMapping } from '../../../utils/iconMapping';
+import { IconArrowRight } from '../../Atoms/SVGs/IconArrowRight/IconArrowRight';
 
 interface PreviewLinkListProps {
   link: {
@@ -16,7 +17,7 @@ export const PreviewLinkList: FC<PreviewLinkListProps> = ({ link }) => {
   const Icon = link.platform?.icon ? iconMapping[link.platform.icon as IconKey] : null;
   return (
     <PreviewLinksItem linkType={link.platform?.value || ''}>
-      {Icon && <Icon />} {link.platform?.label}
+      {Icon && <Icon />} {link.platform?.label} <IconArrowRight />
     </PreviewLinksItem>
   );
 };

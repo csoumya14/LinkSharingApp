@@ -9,7 +9,9 @@ export const StyledForm = styled.form`
 
 export const StyledContainer = styled.div`
   display: grid;
-  flex-direction: column;
-  margin-top: 2rem;
+  grid-template-columns: repeat(1, fr);
+  grid-template-rows: 0.1fr 1fr 0.2fr;
   gap: 1rem;
+  height: 80vh;
+  margin-top: 2rem;
 `;

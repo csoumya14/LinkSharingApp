@@ -1,14 +1,24 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import { StyledNavLink } from './CustomNavLink.style';
 import { NavLinkProps } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 interface CustomNavLinkProps extends NavLinkProps {
   to: string;
   children?: React.ReactNode;
-  icon: React.ReactNode;
+  iconSmall?: React.ReactNode;
+  iconLarge?: React.ReactNode;
   id: string;
 }
-export const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children, icon, id, className }) => {
+export const CustomNavLink: FC<CustomNavLinkProps> = ({
+  to,
+  children,
+  iconSmall,
+  iconLarge,
+  id,
+  className,
+}) => {
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 768px)' });
   return (
     <StyledNavLink
       to={to}
@@ -16,7 +26,7 @@ export const CustomNavLink: FC<CustomNavLinkProps> = ({ to, children, icon, id, 
       aria-labelledby={id}
       className={className}
     >
-      {icon}
+      {isLargeScreen && iconLarge ? iconLarge : iconSmall}
       <span>{children}</span>
     </StyledNavLink>
   );

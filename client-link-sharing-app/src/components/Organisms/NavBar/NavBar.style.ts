@@ -16,11 +16,19 @@ export const StyledLogo = styled.h1`
 `;
 
 export const StyledNav = styled.nav`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  background-color: ${props => props.theme.palette.neutral.white};
+  gap: 0.1rem;
+  padding: 1rem;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    grid-template-columns: 1fr auto auto 1fr;
+  }
 `;
 
 export const StyledCustomNavLink = styled(CustomNavLink)`
+  align-self: center;
   svg {
     @media (max-width: ${props => props.theme.mediaSize.md}) {
       position: absolute;
@@ -32,7 +40,8 @@ export const StyledCustomNavLink = styled(CustomNavLink)`
 `;
 
 export const StyledCustomPreviewNavLink = styled(CustomNavLink)`
-  border: 1px solid ${props => props.theme.palette.primary.purple}; /* Custom focus outline */
+  border: 1px solid ${props => props.theme.palette.primary.purple};
+  justify-self: end;
   svg {
     @media (max-width: ${props => props.theme.mediaSize.md}) {
       display: block;

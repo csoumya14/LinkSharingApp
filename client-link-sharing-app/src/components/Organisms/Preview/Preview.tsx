@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Button } from '../../Atoms/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { LinkFieldValues } from '../../../types/formValues';
-import { ButtonWrapper, InfoWrapper } from './Preview.stye';
+import { BackgroundDiv, ButtonWrapper, Container, InfoWrapper } from './Preview.stye';
 import { PreviewProfile } from '../../Molecules/PreviewProfile/PreviewProfile';
 import { PreviewLinks } from '../../Molecules/PreviewLinks/PreviewLinks';
 
@@ -30,7 +30,8 @@ export const Preview: FC<PreviewProps> = () => {
     );
   };
   return (
-    <>
+    <Container>
+      <BackgroundDiv />
       <ButtonWrapper>
         <Button onClick={handleClick} variant="secondary">
           {' '}
@@ -45,6 +46,6 @@ export const Preview: FC<PreviewProps> = () => {
         <PreviewProfile />
         <PreviewLinks />
       </InfoWrapper>
-    </>
+    </Container>
   );
 };

@@ -1,12 +1,7 @@
 import { FC, useEffect, useRef, useState } from 'react';
 
-import {
-  Container,
-  StyledHeading,
-  StyledIllustrationPhoneMockUp,
-  StyledPara,
-} from './InstructionAddLinks.style';
-import { IllustrationPhoneMockUp } from '../../Atoms/SVGs/IllustrationPhoneMockUp/IllustrationPhoneMockUp';
+import { Container, StyledHeading, StyledPara } from './InstructionAddLinks.style';
+import { IllustrationAddLinks } from '../../Atoms/SVGs/IllustrationAddLinks/IllustrationAddLinks';
 
 interface InstructionAddLinksProps {}
 export const InstructionAddLinks: FC<InstructionAddLinksProps> = () => {
@@ -24,8 +19,8 @@ export const InstructionAddLinks: FC<InstructionAddLinksProps> = () => {
         const calculatedHeight = parentHeight * 0.8; // Example: 50% of parent height
 
         setSvgSize({
-          width: Math.min(calculatedWidth, 500), // Limit maximum width
-          height: Math.min(calculatedHeight, 400), // Limit maximum height
+          width: Math.min(calculatedWidth, 300), // Limit maximum width
+          height: Math.min(calculatedHeight, 200), // Limit maximum height
         });
       }
     };
@@ -42,14 +37,10 @@ export const InstructionAddLinks: FC<InstructionAddLinksProps> = () => {
   }, []);
   return (
     <Container ref={parentRef}>
-      <IllustrationPhoneMockUp
+      <IllustrationAddLinks
         viewBox="0 0 120 100"
         width={`${svgSize.width}px`}
         height={`${svgSize.height}px`}
-        /* smallWidth=""
-        smallHeight=""
-        smallerWidth=""
-        smallerHeight="" */
       />
       <StyledHeading textLevel="h2" role="heading" aria-level={2}>
         Lets get you started

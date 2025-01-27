@@ -1,5 +1,21 @@
 import { styled } from 'styled-components';
 
+export const Wrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  width: 100%;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    min-height: 80vh;
+  }
+  @media (min-width: ${props => props.theme.mediaSize.lg}) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+`;
+
 export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;

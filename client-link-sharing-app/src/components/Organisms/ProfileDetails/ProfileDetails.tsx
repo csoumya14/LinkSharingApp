@@ -1,11 +1,13 @@
 import { FC, useEffect, useState } from 'react';
-import { StyledContainer, StyledForm } from './ProfileDetails.style';
+import { StyledContainer, StyledForm, Wrapper } from './ProfileDetails.style';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ProfileFieldValues } from '../../../types/formValues';
 import { ImageProfileDetails } from '../../Molecules/ImageProfileDetails/ImageProfileDetails';
 import { TextProfileDetail } from '../../Molecules/TextProfileDetails/TextProfileDetails';
+import { useMediaQuery } from 'react-responsive';
+import { PhonePreview } from '../../Molecules/PhonePreview/PhonePreview';
 
 interface ProfileDetailsProps {}
 
@@ -21,6 +23,10 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const imageFile = watch('image');
+  //Watch form values for real-time svg updates
+  const watchedFirstName = watch('firstName');
+  const watchedLastName = watch('lastName');
+  const watchedEmail = watch('email');
 
   useEffect(() => {
     if (imageFile && imageFile[0]) {
@@ -70,20 +76,30 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
       console.error('Error submitting profile data:', error);
     }
   };
-
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 992px)' });
   return (
-    <StyledContainer>
-      <CustomizableTextContainer
-        headingText="Profile Details"
-        headingLevel="h2"
-        bannerLevel="p"
-        bannerText="Add your details to create a personal touch to your profile"
-      />
-      <StyledForm onSubmit={handleSubmit(onSubmit)}>
-        <ImageProfileDetails imagePreview={imagePreview} register={register} />
-        <TextProfileDetail register={register} errors={errors} />
-      </StyledForm>
-      <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
-    </StyledContainer>
+    <Wrapper>
+      {isLargeScreen && (
+        <PhonePreview
+          profileImage={imageFile}
+          firstName={watchedFirstName}
+          lastName={watchedLastName}
+          email={watchedEmail}
+        />
+      )}
+      <StyledContainer>
+        <CustomizableTextContainer
+          headingText="Profile Details"
+          headingLevel="h2"
+          bannerLevel="p"
+          bannerText="Add your details to create a personal touch to your profile"
+        />
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
+          <ImageProfileDetails imagePreview={imagePreview} register={register} />
+          <TextProfileDetail register={register} errors={errors} />
+        </StyledForm>
+        <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
+      </StyledContainer>
+    </Wrapper>
   );
 };

@@ -17,6 +17,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
     getValues,
     handleSubmit,
     control,
+    watch,
     reset,
     formState: { errors, isValid, isDirty },
   } = useForm<LinkFieldValues>({
@@ -30,6 +31,16 @@ export const AddLinks: FC<AddLinksProps> = () => {
     control,
     name: 'links',
   });
+
+  //Watch form values for real-time svg updates
+  const watchedLinks = watch('links');
+
+  //Map watchedLinks into the structre expected by PhonePreview
+  const previewLinks = fields.map((field, index) => ({
+    id: field.id,
+    link: watchedLinks[index]?.link || '',
+    platform: watchedLinks[index]?.platform || { icon: '', label: '', value: '' },
+  }));
   // Handle form submission
   const onSubmit: SubmitHandler<LinkFieldValues> = async data => {
     console.log(data.links);
@@ -58,7 +69,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
   const isLargeScreen = useMediaQuery({ query: '(min-width: 992px)' });
   return (
     <Wrapper>
-      {isLargeScreen && <PhonePreview links={fields} />}
+      {isLargeScreen && <PhonePreview selectedLinks={previewLinks} />}
       <StyledContainer>
         <div>
           <CustomizableTextContainer

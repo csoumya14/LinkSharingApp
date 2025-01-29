@@ -20,23 +20,45 @@ export const PhonePreview: FC<PhonePreviewProps> = ({
   email,
 }) => {
   const { links: backendLinks, profile, error } = useAppContext();
+  console.log('image', profile?.image);
 
   if (error) {
     return <div>Error: {error}</div>;
   }
+  const getImageUrl = (image: FileList | string | undefined) => {
+    if (typeof image === 'string') {
+      return image; // If it's already a URL, return it
+    } else if (image instanceof FileList && image.length > 0) {
+      return URL.createObjectURL(image[0]); // Convert FileList to a URL
+    }
+    return undefined; // Return undefined if no valid image is found
+  };
+
+  const imageToBeShown = getImageUrl(profileImage) || getImageUrl(profile?.image);
+
   const combinedLinks = [...(backendLinks || []), ...(selectedLinks || [])];
-  const imageToBeShown = profileImage || profile?.image;
-  const firstNameLastName = firstName || profile?.firstName;
+  //const imageToBeShown = profileImage || profile?.image;
+  /*  const imageToBeShown =
+    typeof profileImage === 'string'
+      ? profileImage // If it's already a URL, use it
+      : profileImage instanceof FileList && profileImage.length > 0
+        ? URL.createObjectURL(profileImage[0]) // Convert FileList to URL
+        : profile?.image; // Use backend image if available */
+
+  const fullName =
+    [firstName, lastName].filter(Boolean).join(' ') ||
+    [profile?.firstName, profile?.lastName].filter(Boolean).join(' ');
   const emailToBeShown = email || profile?.email;
+  const filteredLinks = combinedLinks.filter(linkItem => linkItem.link.trim() !== '');
   return (
     <StyledContainer>
       <IllustrationPhoneMockUpp
         width="300"
         height="700"
         viewBox="0 -100 300 800"
-        links={combinedLinks}
+        links={filteredLinks}
         profileImage={imageToBeShown}
-        firstNameLastName={firstNameLastName}
+        firstNameLastName={fullName}
         email={emailToBeShown}
       />
     </StyledContainer>

@@ -26,7 +26,6 @@ export const InputLink: FC<InputLinkProps> = ({ index, register, errors, getValu
           validate: (value: string) => {
             const platform = getValues(`links.${index}.platform.value`); // Get selected platform value
             const pattern = validationPatterns[platform];
-            console.log(platform);
             return pattern ? pattern.test(value) || 'Invalid URL format' : true;
           },
         }}

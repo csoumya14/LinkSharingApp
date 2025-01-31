@@ -43,6 +43,9 @@ export const ImageWrapper = styled.div`
     grid-template-columns: 1fr 0.5fr 0.5fr;
     align-items: center;
   }
+  @media (min-width: ${props => props.theme.mediaSize.lg}) {
+    grid-template-columns: 0.5fr 0.5fr 0.5fr;
+  }
 `;
 export const StyledBannerHeading = styled(Banner)`
   font-size: ${props => props.theme.typography.bodyM.fontSize};

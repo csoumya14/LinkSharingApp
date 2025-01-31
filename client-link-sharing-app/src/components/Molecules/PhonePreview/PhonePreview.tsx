@@ -37,13 +37,6 @@ export const PhonePreview: FC<PhonePreviewProps> = ({
   const imageToBeShown = getImageUrl(profileImage) || getImageUrl(profile?.image);
 
   const combinedLinks = [...(backendLinks || []), ...(selectedLinks || [])];
-  //const imageToBeShown = profileImage || profile?.image;
-  /*  const imageToBeShown =
-    typeof profileImage === 'string'
-      ? profileImage // If it's already a URL, use it
-      : profileImage instanceof FileList && profileImage.length > 0
-        ? URL.createObjectURL(profileImage[0]) // Convert FileList to URL
-        : profile?.image; // Use backend image if available */
 
   const fullName =
     [firstName, lastName].filter(Boolean).join(' ') ||

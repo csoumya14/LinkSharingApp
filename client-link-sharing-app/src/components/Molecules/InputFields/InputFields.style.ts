@@ -8,6 +8,10 @@ export const Wrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     align-items: center;
   }
+  @media (min-width: ${props => props.theme.mediaSize.lg}) {
+    grid-template-columns: 0.4fr 1fr;
+    align-items: center;
+  }
 `;
 
 export const StyledLabel = styled.label`

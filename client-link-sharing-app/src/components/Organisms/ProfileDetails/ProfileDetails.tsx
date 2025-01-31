@@ -8,6 +8,8 @@ import { ImageProfileDetails } from '../../Molecules/ImageProfileDetails/ImagePr
 import { TextProfileDetail } from '../../Molecules/TextProfileDetails/TextProfileDetails';
 import { useMediaQuery } from 'react-responsive';
 import { PhonePreview } from '../../Molecules/PhonePreview/PhonePreview';
+import { useAppContext } from '../../../context/AppContext';
+import { createFileList } from '../../../utils/fileUtils';
 
 interface ProfileDetailsProps {}
 
@@ -22,6 +24,8 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
     mode: 'onChange',
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const { updateProfile } = useAppContext(); // Get update functions
+
   const imageFile = watch('image');
   //Watch form values for real-time svg updates
   const watchedFirstName = watch('firstName');
@@ -71,6 +75,17 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
 
       const result = await response.json();
       console.log('Profile updated successfully:', result);
+
+      // Convert File to FileList before updating context
+      const updatedImage = data.image?.[0] ? createFileList(data.image[0]) : undefined;
+
+      // Immediately update the profile in the AppContext
+      updateProfile({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        email: data.email,
+        image: updatedImage, // Ensure File object or undefined
+      });
       reset();
     } catch (error) {
       console.error('Error submitting profile data:', error);

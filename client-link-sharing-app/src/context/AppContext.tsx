@@ -1,10 +1,13 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { LinkFieldValues, ProfileFieldValues, RawData } from '../types/formValues';
+import { createFileList } from '../utils/fileUtils';
 
 interface AppContextValues {
   profile: ProfileFieldValues | null;
   links: LinkFieldValues['links'];
   error: string | null;
+  updateProfile: (newProfile: Partial<ProfileFieldValues>) => void;
+  updateLinks: (newLinks: LinkFieldValues['links']) => void;
 }
 
 const AppContext = createContext<AppContextValues | undefined>(undefined);
@@ -62,7 +65,33 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     fetchLinks();
   }, []);
 
-  return <AppContext.Provider value={{ profile, links, error }}>{children}</AppContext.Provider>;
+  //Function to update the profile state immediately
+  const updateProfile = (newProfile: Partial<ProfileFieldValues>) => {
+    setProfile(prevProfile => {
+      if (!prevProfile) return null; // Ensure prevProfile exists before updating
+
+      return {
+        ...prevProfile, // Keep existing required fields
+        ...newProfile, // Merge in new profile data
+        id: prevProfile.id, // Ensure `id` is never `undefined`
+        image:
+          newProfile.image instanceof FileList
+            ? newProfile.image
+            : newProfile.image
+              ? createFileList(newProfile.image) // Convert File to FileList
+              : prevProfile.image, // Keep existing image if none provided
+      };
+    });
+  };
+  const updateLinks = (newLinks: LinkFieldValues['links']) => {
+    setLinks(prevLinks => [...prevLinks, ...newLinks]);
+  };
+
+  return (
+    <AppContext.Provider value={{ profile, links, error, updateProfile, updateLinks }}>
+      {children}
+    </AppContext.Provider>
+  );
 };
 
 // Custom hook to access the context

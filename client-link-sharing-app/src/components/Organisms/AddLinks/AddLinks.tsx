@@ -7,6 +7,7 @@ import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
 import { PhonePreview } from '../../Molecules/PhonePreview/PhonePreview';
 import { useMediaQuery } from 'react-responsive';
+import { useAppContext } from '../../../context/AppContext';
 
 interface AddLinksProps {}
 
@@ -41,6 +42,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
     link: watchedLinks[index]?.link || '',
     platform: watchedLinks[index]?.platform || { icon: '', label: '', value: '' },
   }));
+  const { updateLinks } = useAppContext();
   // Handle form submission
   const onSubmit: SubmitHandler<LinkFieldValues> = async data => {
     console.log(data.links);
@@ -56,6 +58,7 @@ export const AddLinks: FC<AddLinksProps> = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       alert('Links saved to JSON file!');
+      updateLinks(data.links);
       reset(); // Reset form after submission
     } catch (error) {
       console.error('Failed to save links', error);

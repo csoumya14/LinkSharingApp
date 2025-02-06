@@ -5,5 +5,8 @@ export const LinkWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
-  gap: 0.3rem;
+  gap: 1rem;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    width: 90%;
+  }
 `;

@@ -5,6 +5,7 @@ export const Container = styled.div`
   grid-template-columns: repeat(1, 1fr);
   grid-template-rows: 0.1fr 1fr;
   gap: 3rem;
+  justify-items: center;
   @media (min-width: ${props => props.theme.mediaSize.md}) {
     gap: 10rem;
   }
@@ -30,6 +31,10 @@ export const ButtonWrapper = styled.div`
   background-color: ${props => props.theme.palette.neutral.white};
   padding: 1rem;
   border-radius: 10px;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    width: 95%;
+    margin-top: 1.5rem;
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -38,7 +43,7 @@ export const InfoWrapper = styled.div`
   width: 100%;
   align-items: center;
   gap: 1rem;
-  padding: 1rem;
+  padding: 0rem 4rem;
   @media (min-width: ${props => props.theme.mediaSize.md}) {
     justify-content: center;
     align-items: center;
@@ -48,7 +53,11 @@ export const InfoWrapper = styled.div`
     background-color: white;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 20px;
-    padding: 20px;
+    padding: 3rem 1rem;
     z-index: 1;
+  }
+  @media (min-width: ${props => props.theme.mediaSize.lg}) {
+    margin: -5rem auto;
+    width: 30%;
   }
 `;

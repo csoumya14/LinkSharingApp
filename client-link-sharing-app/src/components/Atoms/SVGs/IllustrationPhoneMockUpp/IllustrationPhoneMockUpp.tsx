@@ -75,7 +75,8 @@ export const IllustrationPhoneMockUpp: FC<Props> = ({
         <text
           x="105" // Align text inside the rectangle
           y="185" // Adjust for vertical alignment
-          fontSize="12"
+          fontSize="15"
+          fontWeight={600}
           fill="#000"
           style={{ whiteSpace: 'pre' }}
         >
@@ -87,9 +88,9 @@ export const IllustrationPhoneMockUpp: FC<Props> = ({
 
       {email ? (
         <text
-          x="90.5" // Align text inside the rectangle
-          y="214" // Adjust for vertical alignment
-          fontSize="10"
+          x="105" // Align text inside the rectangle
+          y="205" // Adjust for vertical alignment
+          fontSize="12"
           fill="#000"
           rx="4"
         >

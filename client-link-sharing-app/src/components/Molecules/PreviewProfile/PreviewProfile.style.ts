@@ -11,9 +11,13 @@ export const ProfileWrapper = styled.div`
 export const ImageContainer = styled.div`
   width: 150px;
   height: 150px;
-  object-fit: cover;
   border-radius: 50%;
+  border: 5px solid ${props => props.theme.palette.primary.purple};
   background-color: ${props => props.theme.palette.primary.veryVeryLightGrey};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 `;
 
 export const StyledImage = styled.img`

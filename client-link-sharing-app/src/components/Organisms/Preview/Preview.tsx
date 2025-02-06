@@ -1,15 +1,16 @@
 import { FC, useState } from 'react';
 import { Button } from '../../Atoms/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { LinkFieldValues } from '../../../types/formValues';
 import { BackgroundDiv, ButtonWrapper, Container, InfoWrapper } from './Preview.stye';
 import { PreviewProfile } from '../../Molecules/PreviewProfile/PreviewProfile';
 import { PreviewLinks } from '../../Molecules/PreviewLinks/PreviewLinks';
+import { useMediaQuery } from 'react-responsive';
 
 interface PreviewProps {}
 export const Preview: FC<PreviewProps> = () => {
   const navigate = useNavigate();
   const [copyMessage, setCopyMessage] = useState('');
+  const isLargeScreen = useMediaQuery({ query: '(min-width: 767px)' });
   const handleClick = () => {
     navigate('/profile'); // Navigate to the /profile page
   };
@@ -31,14 +32,13 @@ export const Preview: FC<PreviewProps> = () => {
   };
   return (
     <Container>
-      <BackgroundDiv />
+      {isLargeScreen && <BackgroundDiv />}
       <ButtonWrapper>
         <Button onClick={handleClick} variant="secondary">
           {' '}
           Back to editor
         </Button>
         <Button onClick={handleShareLinks} variant="primary">
-          {' '}
           Share Link
         </Button>
       </ButtonWrapper>

@@ -1,0 +1,3 @@
+### Get profile with authentication
+GET http://localhost:3001/api/profiles/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczOTc5NDYwMiwiZXhwIjoxNzM5Nzk4MjAyfQ.MRrw2VD1a94XeIckWeECOjr3E9JnTx-ZqW-lu9Pwrw8

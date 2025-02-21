@@ -4,7 +4,8 @@ const pool = require('../config/db'); // PostgreSQL connection pool
 getLinks = async (req, res) => {
   try {
     // Fetches all rows from the links table in the database
-    const result = await pool.query('SELECT * FROM links');
+    const userId = req.user.userId;
+    const result = await pool.query('SELECT * FROM links WHERE user_id = $1', [userId]);
     res.json(result.rows);
   } catch (error) {
     console.error('Error fetching links:', error.message);
@@ -14,6 +15,7 @@ getLinks = async (req, res) => {
 // Controller function to add a new link
 addLink = async (req, res) => {
   console.log('Received request body:', req.body);
+  const userId = req.user.userId;
   const links = req.body; // Expecting an array of link objects
 
   // Validate input data
@@ -31,14 +33,24 @@ and send the added record back to the client. */
     // Insert each link into the database
     const promises = links.map(link =>
       pool.query(
-        'INSERT INTO links (platform_value, platform_label, platform_icon, link) VALUES ($1, $2, $3, $4) RETURNING *',
-        [link.platform?.value, link.platform?.label, link.platform?.icon, link.link],
+        'INSERT INTO links (profile_id, platform_value, platform_label, platform_icon, link, user_id) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *',
+        [
+          link.profile_id,
+          link.platform?.value,
+          link.platform?.label,
+          link.platform?.icon,
+          link.link,
+          userId,
+        ],
       ),
     );
 
     // Wait for all insertions to complete
     const results = await Promise.all(promises);
-
+    console.log(
+      '✅ Link added successfully:',
+      results.map(result => result.rows[0]),
+    );
     // Return the newly added link
     res.status(201).json(results.map(result => result.rows[0]));
   } catch (error) {

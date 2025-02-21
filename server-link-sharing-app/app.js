@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const requestLogger = require('./middlewares/requestLogger');
+const authRoutes = require('./routes/authRoutes');
 const linksRoutes = require('./routes/linksRoutes');
 const profileRoutes = require('./routes/profileRoutes');
 const cors = require('cors');
@@ -9,6 +10,7 @@ const cors = require('cors');
 app.use(cors());
 app.use(express.json());
 app.use(requestLogger);
+app.use('/api/auth', authRoutes); // Base URL for the auth router
 app.use('/api/links', linksRoutes); // Base URL for the link router
 
 // Serve files from the 'uploads' directory

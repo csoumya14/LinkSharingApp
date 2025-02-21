@@ -1,0 +1,22 @@
+### 🟠 Update Profile (Requires Authentication)
+PUT http://localhost:3001/api/profiles/1
+Content-Type: application/json
+Authorization: Bearer your_valid_jwt_token
+
+{
+  "firstName": "New Name",
+  "lastName": "Updated",
+  "email": "newemail@example.com"
+}
+
+### 🔴 Upload Profile Image (Requires Authentication)
+PUT http://localhost:3001/api/profiles/1
+Authorization: Bearer your_valid_jwt_token
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./profile.jpg
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

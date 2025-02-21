@@ -1,0 +1,16 @@
+### Create a new link with authentication
+POST http://localhost:3001/api/links
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTczOTc5NDYwMiwiZXhwIjoxNzM5Nzk4MjAyfQ.MRrw2VD1a94XeIckWeECOjr3E9JnTx-ZqW-lu9Pwrw8
+
+[
+  {
+  
+    "platform": {
+    "value": "linkedin",
+    "label": "LinkedIn",
+    "icon": "linkedinIcon"
+  },
+  "link": "https://www.linkedin.com/in/soumya-chalakkal-60885246"
+  }
+]

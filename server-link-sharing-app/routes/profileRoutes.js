@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const { getProfile, updateProfile, upload } = require('../controllers/profileController');
+const { getProfile, updateProfile, createProfile } = require('../controllers/profileController');
+const authMiddleware = require('../middlewares/authMiddleware');
+const upload = require('../middlewares/upload');
 
 // Middleware to log all requests to this router
 router.use((req, res, next) => {
@@ -12,7 +14,7 @@ router.use((req, res, next) => {
 });
 
 // Route to get profile information
-router.get('/:id', getProfile);
+router.get('/:id', authMiddleware.verifyToken, getProfile);
 
 /* router.put(
   '/',
@@ -30,8 +32,11 @@ router.get('/:id', getProfile);
   updateProfile,
 );
  */
+
+// Route to create a new profile
+router.post('/', authMiddleware.verifyToken, upload.single('image'), createProfile);
 // Route to update profile information
-router.put('/:id', upload.single('image'), updateProfile);
+router.put('/:id', authMiddleware.verifyToken, upload.single('image'), updateProfile);
 /* upload.single('image'): specifies that the route expects a single file with the field name image*/
 
 module.exports = router;

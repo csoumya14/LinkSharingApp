@@ -2,32 +2,8 @@ const multer = require('multer');
 const path = require('path');
 const pool = require('../config/db'); // PostgreSQL connection pool
 
-/* the diskStorage method from the multer library is used to configure how files should be 
-stored on the servers file system. It allows you to define:
- where to save the files and how to name the files
- */
-
-/* desitnation is a callback function where you specify the directory where the uploaded files should be stored
-req: HTTP request object, file: information about the uploaded file
-cb: callback function to pass the destiantion path
-path.join(__dirname, '../uploads'): __dirname refers to the current directory of the script
-../uploads navigates one level up from the current directory and looks for an upload folder. This ensures
- that the upload files will be saved in the upload directory relative to the scripts location
- Callback: The first argument null is for the error if any. Here its set to null because there is no error.
- The second argument is the path to the directory where files should be saved.
- The filename function determines the name of the uploaded file.
- file.fieldname: The name of the form field used to upload the file.
- Date.now(): A timestamp to ensure filenames are unique.
- Math.round(Math.random()*1E9: A randomly generated number to further avoid filename collisions
- path.extname(file.originalname):Extracts the file extension(eg .jpg,.png) from the original file name
- example: If the uploaded file was named profile-pic.jpg and the form field was image, the resulting
- filename might be: image-1637093420487-834897123.jpg
- Callback: The first argument (null) is for the error
- The second argument is the generated filename.
-*/
-
 // configure multer storage
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, '../uploads')); //
   },
@@ -39,16 +15,20 @@ const storage = multer.diskStorage({
   },
 });
 
-/*This initializes multer with the specified storage configuration. The upload object is now ready
-to be used as middleware in routes to handle file uploads.*/
+
 const upload = multer({ storage: storage });
-exports.upload = upload;
+exports.upload = upload; */
 
 // Controller function to get profile data
-exports.getProfile = async (req, res) => {
+getProfile = async (req, res) => {
   try {
+    const userIdFromToken = req.user.userId;
+    const userIdFromParams = parseInt(req.params.id, 10);
+    if (userIdFromToken !== userIdFromParams) {
+      return res.status(403).json({ error: 'Unauthorized: You can only access your own profile' });
+    }
     // Fetch the profile data from the database
-    const result = await pool.query('SELECT * FROM profiles WHERE id = $1', [req.params.id]);
+    const result = await pool.query('SELECT * FROM profiles WHERE user_id = $1', [userIdFromToken]);
     if (result.rows.length === 0) {
       return res.status(404).json({ error: 'Profile not found' });
     }
@@ -60,24 +40,65 @@ exports.getProfile = async (req, res) => {
   }
 };
 
+createProfile = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { firstName, lastName, email } = req.body;
+    const file = req.file;
+    console.log('📥 Received profile creation request');
+    console.log('🆔 User ID from token:', userId);
+    console.log('📧 Email:', email);
+    console.log('👤 Name:', firstName, lastName);
+    console.log('🖼️ Uploaded File:', file);
+
+    // Check if a profile already exists for the user
+    const existingProfile = await pool.query('SELECT * FROM profiles WHERE user_id = $1', [userId]);
+    if (existingProfile.rows.length > 0) {
+      return res.status(400).json({ error: 'Profile already exists for this user' });
+    }
+
+    // Generate the image URL if a file was uploaded
+    const imagePath = file
+      ? `${req.protocol}://${req.get('host')}/api/uploads/${file.filename}`
+      : null;
+
+    // Insert the new profile into the database
+    const result = await pool.query(
+      'INSERT INTO profiles (user_id, first_name, last_name, email, image) VALUES ($1, $2, $3, $4, $5) RETURNING *',
+      [userId, firstName, lastName, email, imagePath],
+    );
+
+    res.status(201).json({ message: 'Profile created successfully', profile: result.rows[0] });
+  } catch (error) {
+    console.error('Error creating profile:', error.message);
+    res.status(500).json({ error: 'Error creating profile', details: error.message });
+  }
+};
 // Controller function to update profile data
-exports.updateProfile = async (req, res) => {
+updateProfile = async (req, res) => {
   console.log('Inside controller - req.file:', req.file); // Log file object
   console.log('Inside controller - req.body:', req.body); // Log body object
 
-  if (!req.file || !req.body) {
-    return res.status(400).json({ error: 'File or fields not provided' });
-  }
-  const updateData = req.body;
-
-  const file = req.file;
+  const userIdFromToken = req.user.userId;
+  const profileIdFromParams = parseInt(req.params.id);
 
   // Validate that there is at least one field to update
-  if (!updateData.firstName && !updateData.lastName && !updateData.email && !updateData.image) {
+  if (!req.file && Object.keys(req.body).length === 0) {
     return res.status(400).json({ error: 'No fields provided to update' });
   }
 
   try {
+    // Check if profile exists and belongs to the authenticated user
+    const checkProfile = await pool.query('SELECT * FROM profiles WHERE id = $1 and user_id = $2', [
+      profileIdFromParams,
+      userIdFromToken,
+    ]);
+
+    if (checkProfile.rows.length === 0) {
+      return res.status(403).json({ error: 'Unauthorized: You can only update your own profile.' });
+    }
+    const updateData = req.body;
+    const file = req.file;
     // Construct SQL query dynamically based on provided fields
     const fields = [];
     const values = [];
@@ -109,8 +130,11 @@ exports.updateProfile = async (req, res) => {
       return res.status(400).json({ error: 'No fields provided to update' });
     }
     // Complete the query
-    query += ' ' + fields.join(', ') + ` WHERE id = $${fields.length + 1}`;
-    values.push(req.params.id); // Add the profile ID to the values array
+    query +=
+      ' ' +
+      fields.join(', ') +
+      ` WHERE id = $${fields.length + 1} AND user_id = $${fields.length + 2}`;
+    values.push(profileIdFromParams, userIdFromToken); // Add the profile ID and user ID to the values array
 
     console.log('Generated Query:', query);
     console.log('Values:', values);
@@ -119,13 +143,14 @@ exports.updateProfile = async (req, res) => {
     const result = await pool.query(query, values);
 
     if (result.rowCount === 0) {
-      return res.status(404).json({ error: 'Profile not found' });
+      return res.status(404).json({ error: 'Profile not found or authorized' });
     }
 
     // Fetch the updated profile
-    const updatedProfile = await pool.query('SELECT * FROM profiles WHERE id = $1', [
-      req.params.id,
-    ]);
+    const updatedProfile = await pool.query(
+      'SELECT * FROM profiles WHERE id = $1 AND user_id = $2',
+      [profileIdFromParams, userIdFromToken],
+    );
     res.json(updatedProfile.rows[0]);
   } catch (error) {
     // Send a 500 error response if writing fails
@@ -133,4 +158,10 @@ exports.updateProfile = async (req, res) => {
     console.error('Stack Trace:', error.stack);
     res.status(500).json({ error: 'Error updating profile data', details: error.message });
   }
+};
+
+module.exports = {
+  getProfile,
+  createProfile,
+  updateProfile,
 };

@@ -1,0 +1,23 @@
+### 🟢 Create Profile with Image (Requires Authentication)
+POST http://localhost:3001/api/profiles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTc0MDE1MzY0OSwiZXhwIjoxNzQwMTU3MjQ5fQ.vxzg4QKUTle80v5tyv2a0uzkZFmTk-Ojgw6JmltQZKg
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="firstName"
+
+Klara
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="lastName"
+
+Daniel
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="email"
+
+klara.dani@example.com
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="image"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< C:\Users\great\Downloads\image_123650291.JPG
+------WebKitFormBoundary7MA4YWxkTrZu0gW--

@@ -17,7 +17,14 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
   const [links, setLinks] = useState<LinkFieldValues['links']>([]);
   const [error, setError] = useState<string | null>(null);
 
+  const token = localStorage.getItem('token');
+
   useEffect(() => {
+    if (!token) {
+      console.log('No auth token, skipping API Call');
+      return;
+    }
+
     // Fetch profile data
     const fetchProfile = async () => {
       try {
@@ -63,7 +70,7 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     fetchProfile();
     fetchLinks();
-  }, []);
+  }, [token]);
 
   //Function to update the profile state immediately
   const updateProfile = (newProfile: Partial<ProfileFieldValues>) => {

@@ -92,7 +92,12 @@ export const AddLinks: FC<AddLinksProps> = () => {
             register={register}
           />
         </div>
-        <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
+        <ButtonSave
+          isDirty={isDirty}
+          isValid={isValid}
+          handleClick={handleSubmit(onSubmit)}
+          text="save"
+        />
       </StyledContainer>
     </Wrapper>
   );

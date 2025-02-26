@@ -5,11 +5,19 @@ interface ButtonSaveProps {
   isValid: boolean;
   isDirty: boolean;
   handleClick: () => void;
+  text?: string;
+  isLogin?: boolean;
 }
-export const ButtonSave: FC<ButtonSaveProps> = ({ isValid, isDirty, handleClick }) => {
+export const ButtonSave: FC<ButtonSaveProps> = ({
+  isValid,
+  isDirty,
+  handleClick,
+  text,
+  isLogin,
+}) => {
   return (
     <ButtonContainer>
-      <StyledLine />
+      {!isLogin && <StyledLine />}
       <StyledButton
         type="submit"
         variant="primary"
@@ -18,7 +26,7 @@ export const ButtonSave: FC<ButtonSaveProps> = ({ isValid, isDirty, handleClick 
         isDisabled={!isValid || !isDirty}
         onClick={handleClick}
       >
-        Save
+        {text}
       </StyledButton>
     </ButtonContainer>
   );

@@ -2,7 +2,9 @@ import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const StyledNavLink = styled(NavLink)`
-  color: ${props => props.theme.palette.primary.purple};
+  // color: ${props => props.theme.palette.primary.purple};
+  color: black;
+  font-size: 14px;
   font-weight: bold;
   text-decoration: none;
   display: flex;

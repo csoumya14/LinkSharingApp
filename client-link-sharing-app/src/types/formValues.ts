@@ -22,4 +22,7 @@ export type RawData = {
   link: string;
 };
 
-export type FormFieldValues = LinkFieldValues & ProfileFieldValues;
+export type LoginFieldValues = {
+  email: string;
+  password: string;
+};

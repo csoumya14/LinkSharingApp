@@ -46,11 +46,17 @@ export const AddLinks: FC<AddLinksProps> = () => {
   // Handle form submission
   const onSubmit: SubmitHandler<LinkFieldValues> = async data => {
     console.log(data.links);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('No authentication token found. Please log in to save links.');
+      return;
+    }
     try {
       const response = await fetch('http://localhost:3001/api/links', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data.links),
       });

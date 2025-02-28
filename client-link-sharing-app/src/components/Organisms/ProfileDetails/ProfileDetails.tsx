@@ -51,29 +51,71 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
 
   // Handle form submission
   const onSubmit: SubmitHandler<ProfileFieldValues> = async data => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('No authentication token found. Please log in to save profile details.');
+      return;
+    }
+    const { userId } = JSON.parse(atob(token.split('.')[1]));
     const formData = new FormData();
 
     // Append text fields
     formData.append('firstName', data.firstName);
     formData.append('lastName', data.lastName);
     formData.append('email', data.email);
-    const profileId = 1;
     // Append the file (extract the first file from FileList)
     if (data.image && data.image[0]) {
       formData.append('image', imageFile[0]);
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/profiles/${profileId}`, {
+      const checkProfile = await fetch(`http://localhost:3001/api/profiles/${userId}`, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (checkProfile.status === 404) {
+        console.log(' Profile not found. Creating new profile...');
+        const createResponse = await fetch('http://localhost:3001/api/profiles', {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData, //Send form data
+        });
+
+        if (!createResponse.ok) {
+          throw new Error(`HTTP error! status: ${createResponse.status}`);
+        }
+        const createdProfile = await createResponse.json();
+        console.log('Profile created successfully:', createdProfile);
+
+        // Step 4: Update Context with New Profile
+        updateProfile({
+          firstName: data.firstName,
+          lastName: data.lastName,
+          email: data.email,
+          image: data.image?.[0] ? createFileList(data.image[0]) : undefined,
+        });
+
+        reset(); // Reset form
+        return;
+      }
+      console.log('Profile exists. Updating...');
+      const updateResponse = await fetch(`http://localhost:3001/api/profiles/${userId}`, {
         method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         body: formData,
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (!updateResponse.ok) {
+        throw new Error(`HTTP error! Status: ${updateResponse.status}`);
       }
 
-      const result = await response.json();
+      const result = await updateResponse.json();
       console.log('Profile updated successfully:', result);
 
       // Convert File to FileList before updating context

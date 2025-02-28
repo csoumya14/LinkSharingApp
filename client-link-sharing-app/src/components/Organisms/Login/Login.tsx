@@ -21,7 +21,7 @@ export const Login = () => {
   });
   const onSubmit: SubmitHandler<LoginFieldValues> = async data => {
     await login(data.email, data.password);
-    navigate('/AddLinks');
+    navigate('/add-links');
   };
 
   return (
@@ -43,7 +43,10 @@ export const Login = () => {
           text="Login"
         />
       </StyledForm>
-      <CreateAccountInstruction />
+      <CreateAccountInstruction
+        instructionText="Don't have an account?"
+        buttonText="Create account"
+      />
     </Container>
   );
 };

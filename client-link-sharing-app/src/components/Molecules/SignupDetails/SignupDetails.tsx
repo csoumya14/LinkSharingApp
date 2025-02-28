@@ -1,14 +1,14 @@
 import { FC } from 'react';
-import { TextWrapper } from './LoginDetails.style';
+import { TextWrapper } from './SignupDetails.style';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { LoginFieldValues } from '../../../types/formValues';
 import { InputLogin } from '../InputLogin/InputLogin';
 
-interface LoginDetailsProps {
+interface SignupDetailsProps {
   errors: FieldErrors<LoginFieldValues>;
   register: UseFormRegister<LoginFieldValues>;
 }
-export const LoginDetails: FC<LoginDetailsProps> = ({ register, errors }) => {
+export const SignupDetails: FC<SignupDetailsProps> = ({ register, errors }) => {
   return (
     <>
       <TextWrapper>

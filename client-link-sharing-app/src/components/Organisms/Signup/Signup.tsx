@@ -1,7 +1,50 @@
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { LoginFieldValues } from '../../../types/formValues';
+import { LogoLargeScreen } from '../../Atoms/SVGs/LogoLargeScreen/LogoLargeScreen';
+import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
+import { LoginDetails } from '../../Molecules/LoginDetails/LoginDetails';
+import { Container, StyledForm } from './Signup.style';
+import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
+import { CreateAccountInstruction } from '../../Molecules/CreateAccountInstruction/CreateAccountInstruction';
+import { SignupDetails } from '../../Molecules/SignupDetails/SignupDetails';
+
 export const Signup = () => {
+  const { signup } = useAuth();
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty },
+  } = useForm<LoginFieldValues>({
+    mode: 'onChange',
+  });
+  const onSubmit: SubmitHandler<LoginFieldValues> = async data => {
+    await signup(data.email, data.password);
+    navigate('/login');
+  };
+
   return (
-    <div>
-      <h1>Signup</h1>
-    </div>
+    <Container>
+      <LogoLargeScreen />
+      <CustomizableTextContainer
+        headingText="Create account"
+        headingLevel="h2"
+        bannerLevel="p"
+        bannerText="Let's get you started sharing your links!"
+      />
+      <StyledForm>
+        <SignupDetails register={register} errors={errors} />
+        <ButtonSave
+          isDirty={isDirty}
+          isLogin
+          isValid={isValid}
+          handleClick={handleSubmit(onSubmit)}
+          text="Create new account"
+        />
+      </StyledForm>
+      <CreateAccountInstruction instructionText={'Already have an account'} buttonText={'Login'} />
+    </Container>
   );
 };

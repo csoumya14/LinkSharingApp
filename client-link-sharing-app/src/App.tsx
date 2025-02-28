@@ -1,13 +1,12 @@
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import ThemeWrapper from './theme/ThemeWrapper';
-import { NavBar } from './components/Organisms/NavBar/NavBar';
 import { AddLinks } from './components/Organisms/AddLinks/AddLinks';
 import { ProfileDetails } from './components/Organisms/ProfileDetails/ProfileDetails';
 import { Preview } from './components/Organisms/Preview/Preview';
 import { useAuth } from './context/AuthContext';
 import { Login } from './components/Organisms/Login/Login';
-import { Signup } from './components/Organisms/Signup/Signup';
 import { Layout } from './components/Organisms/Layout/Layout';
+import { Signup } from './components/Organisms/Signup/Signup';
 
 const App = () => {
   const { isAuthenticated } = useAuth(); // Get auth status

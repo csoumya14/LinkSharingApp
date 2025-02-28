@@ -28,7 +28,20 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
     // Fetch profile data
     const fetchProfile = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/profiles/1');
+        const { userId } = JSON.parse(atob(token.split('.')[1])); // Decoding the JWT payload
+        console.log('User ID from token:', userId); // Debugging
+        const response = await fetch(`http://localhost:3001/api/profiles/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.status === 404) {
+          console.log('Profile not found. Skipping profile fetching.');
+          return; //  Exit without setting state (do not create profile)
+        }
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -48,8 +61,20 @@ export const AppProvider = ({ children }: { children: ReactNode }) => {
 
     // Fetch links data
     const fetchLinks = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        console.log('No auth token, skipping API Call');
+        setError('Unauthorized: No token found. Please log in.');
+        return;
+      }
       try {
-        const response = await fetch('http://localhost:3001/api/links');
+        const response = await fetch('http://localhost:3001/api/links', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

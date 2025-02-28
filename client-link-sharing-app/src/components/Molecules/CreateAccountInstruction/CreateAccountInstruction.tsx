@@ -3,13 +3,19 @@ import { Banner } from '../../Atoms/Banner/Banner';
 import { CustomNavLink } from '../CustomNavLink/CustomNavLink';
 import { Container } from './CreateAccountInstruction.style';
 
-interface CreateAccountInstructionProps {}
-export const CreateAccountInstruction: FC<CreateAccountInstructionProps> = () => {
+interface CreateAccountInstructionProps {
+  instructionText: string;
+  buttonText: string;
+}
+export const CreateAccountInstruction: FC<CreateAccountInstructionProps> = ({
+  instructionText,
+  buttonText,
+}) => {
   return (
     <Container>
-      <Banner textLevel="p">Don't have an account?</Banner>
+      <Banner textLevel="p">{instructionText}</Banner>
       <CustomNavLink to={'/signup'} id={'sign-up'}>
-        Create Account
+        {buttonText}
       </CustomNavLink>
     </Container>
   );

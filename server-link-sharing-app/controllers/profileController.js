@@ -45,11 +45,11 @@ createProfile = async (req, res) => {
     const userId = req.user.userId;
     const { firstName, lastName, email } = req.body;
     const file = req.file;
-    console.log('📥 Received profile creation request');
-    console.log('🆔 User ID from token:', userId);
-    console.log('📧 Email:', email);
-    console.log('👤 Name:', firstName, lastName);
-    console.log('🖼️ Uploaded File:', file);
+    console.log(' Received profile creation request');
+    console.log(' User ID from token:', userId);
+    console.log(' Email:', email);
+    console.log(' Name:', firstName, lastName);
+    console.log(' Uploaded File:', file);
 
     // Check if a profile already exists for the user
     const existingProfile = await pool.query('SELECT * FROM profiles WHERE user_id = $1', [userId]);

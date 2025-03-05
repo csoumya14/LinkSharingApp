@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 0.5fr 1fr auto;
+  gap: 1rem;
   flex-direction: column;
-  border: 1px solid red;
   padding: 1rem;
 `;
 

@@ -1,18 +1,20 @@
 import { FC } from 'react';
 import { TextWrapper } from './SignupDetails.style';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
-import { LoginFieldValues } from '../../../types/formValues';
+import { FieldErrors, UseFormRegister, UseFormWatch } from 'react-hook-form';
+import { SignupFieldValues } from '../../../types/formValues';
 import { InputLogin } from '../InputLogin/InputLogin';
 
 interface SignupDetailsProps {
-  errors: FieldErrors<LoginFieldValues>;
-  register: UseFormRegister<LoginFieldValues>;
+  errors: FieldErrors<SignupFieldValues>;
+  register: UseFormRegister<SignupFieldValues>;
+  watch: UseFormWatch<SignupFieldValues>;
 }
-export const SignupDetails: FC<SignupDetailsProps> = ({ register, errors }) => {
+export const SignupDetails: FC<SignupDetailsProps> = ({ register, errors, watch }) => {
+  const password = watch('password');
   return (
     <>
       <TextWrapper>
-        <InputLogin
+        <InputLogin<SignupFieldValues>
           label="Email address"
           type="email"
           name="email"
@@ -29,12 +31,28 @@ export const SignupDetails: FC<SignupDetailsProps> = ({ register, errors }) => {
         />
         <InputLogin
           label="Password"
-          type="text"
+          type="password"
           name="password"
           placeholder="Enter your password"
           register={register}
           validationRules={{
             required: "Can't be empty",
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters',
+            },
+          }}
+          errors={errors}
+        />
+        <InputLogin
+          label="Confirm password"
+          type="password"
+          name="confirmPassword"
+          placeholder="Re enter your password"
+          register={register}
+          validationRules={{
+            required: "Can't be empty",
+            validate: value => value === password || 'Passwords do not match',
           }}
           errors={errors}
         />

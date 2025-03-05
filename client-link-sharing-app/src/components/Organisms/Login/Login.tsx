@@ -46,6 +46,7 @@ export const Login = () => {
       <CreateAccountInstruction
         instructionText="Don't have an account?"
         buttonText="Create account"
+        to={'/signup'}
       />
     </Container>
   );

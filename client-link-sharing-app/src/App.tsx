@@ -9,7 +9,7 @@ import { Layout } from './components/Organisms/Layout/Layout';
 import { Signup } from './components/Organisms/Signup/Signup';
 
 const App = () => {
-  const { isAuthenticated } = useAuth(); // Get auth status
+  const { isAuthenticated } = useAuth(); // Get auth status from context
   return (
     <ThemeWrapper>
       <Routes>

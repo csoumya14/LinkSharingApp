@@ -19,10 +19,13 @@ export const CustomNavLink: FC<CustomNavLinkProps> = ({
   className,
 }) => {
   const isLargeScreen = useMediaQuery({ query: '(min-width: 768px)' });
+  console.log({ to });
+  const isLogin = to === '/login' || to === '/signup';
   return (
     <StyledNavLink
       to={to}
       aria-current={to === window.location.pathname ? 'page' : undefined}
+      isLogin={isLogin}
       aria-labelledby={id}
       className={className}
     >

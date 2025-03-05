@@ -6,15 +6,17 @@ import { Container } from './CreateAccountInstruction.style';
 interface CreateAccountInstructionProps {
   instructionText: string;
   buttonText: string;
+  to: string;
 }
 export const CreateAccountInstruction: FC<CreateAccountInstructionProps> = ({
   instructionText,
   buttonText,
+  to,
 }) => {
   return (
     <Container>
       <Banner textLevel="p">{instructionText}</Banner>
-      <CustomNavLink to={'/signup'} id={'sign-up'}>
+      <CustomNavLink to={to} id={'sign-up'}>
         {buttonText}
       </CustomNavLink>
     </Container>

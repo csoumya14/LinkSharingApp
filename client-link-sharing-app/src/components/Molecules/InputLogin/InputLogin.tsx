@@ -1,21 +1,19 @@
-import { FC } from 'react';
-import { UseFormRegister, FieldErrors, RegisterOptions, Path } from 'react-hook-form';
+import { UseFormRegister, FieldErrors, RegisterOptions, Path, FieldValues } from 'react-hook-form';
 import { Input } from '../../Atoms/Form/Input/Input';
-import { LoginFieldValues } from '../../../types/formValues';
 import { StyledLabel, Wrapper } from './InputLogin.style';
 
-interface InputLoginProps {
+interface InputLoginProps<T extends FieldValues> {
   label: string;
   type: string;
-  name: Path<LoginFieldValues>;
-  register: UseFormRegister<LoginFieldValues>;
+  name: Path<T>;
+  register: UseFormRegister<T>;
   placeholder?: string;
   /*Record<string,any> is a utility type that describes an object with 
   string keys and values of any type */
-  validationRules: RegisterOptions<LoginFieldValues>;
-  errors: FieldErrors<LoginFieldValues>;
+  validationRules: RegisterOptions<T>;
+  errors: FieldErrors<T>;
 }
-export const InputLogin: FC<InputLoginProps> = ({
+export const InputLogin = <T extends FieldValues>({
   label,
   type = 'text',
   name,
@@ -23,11 +21,11 @@ export const InputLogin: FC<InputLoginProps> = ({
   placeholder,
   validationRules,
   errors,
-}) => {
+}: InputLoginProps<T>) => {
   return (
     <Wrapper>
       <StyledLabel>{label}</StyledLabel>
-      <Input<LoginFieldValues>
+      <Input<T>
         name={name}
         register={register}
         placeholder={placeholder}

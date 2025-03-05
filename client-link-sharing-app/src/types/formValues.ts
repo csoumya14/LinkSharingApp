@@ -26,3 +26,9 @@ export type LoginFieldValues = {
   email: string;
   password: string;
 };
+
+export type SignupFieldValues = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};

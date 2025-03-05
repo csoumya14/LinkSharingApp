@@ -1,8 +1,7 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { LoginFieldValues } from '../../../types/formValues';
+import { SignupFieldValues } from '../../../types/formValues';
 import { LogoLargeScreen } from '../../Atoms/SVGs/LogoLargeScreen/LogoLargeScreen';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
-import { LoginDetails } from '../../Molecules/LoginDetails/LoginDetails';
 import { Container, StyledForm } from './Signup.style';
 import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { useNavigate } from 'react-router-dom';
@@ -16,11 +15,12 @@ export const Signup = () => {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isValid, isDirty },
-  } = useForm<LoginFieldValues>({
+  } = useForm<SignupFieldValues>({
     mode: 'onChange',
   });
-  const onSubmit: SubmitHandler<LoginFieldValues> = async data => {
+  const onSubmit: SubmitHandler<SignupFieldValues> = async data => {
     await signup(data.email, data.password);
     navigate('/login');
   };
@@ -35,7 +35,7 @@ export const Signup = () => {
         bannerText="Let's get you started sharing your links!"
       />
       <StyledForm>
-        <SignupDetails register={register} errors={errors} />
+        <SignupDetails watch={watch} register={register} errors={errors} />
         <ButtonSave
           isDirty={isDirty}
           isLogin
@@ -44,7 +44,11 @@ export const Signup = () => {
           text="Create new account"
         />
       </StyledForm>
-      <CreateAccountInstruction instructionText={'Already have an account'} buttonText={'Login'} />
+      <CreateAccountInstruction
+        to={'/signup'}
+        instructionText={'Already have an account'}
+        buttonText={'Login'}
+      />
     </Container>
   );
 };

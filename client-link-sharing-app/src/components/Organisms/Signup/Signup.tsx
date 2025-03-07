@@ -45,7 +45,7 @@ export const Signup = () => {
         />
       </StyledForm>
       <CreateAccountInstruction
-        to={'/signup'}
+        to={'/login'}
         instructionText={'Already have an account'}
         buttonText={'Login'}
       />

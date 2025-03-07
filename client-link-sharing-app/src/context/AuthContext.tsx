@@ -1,4 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { useAppContext } from './AppContext';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -13,9 +14,21 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('token') ? true : false;
   });
-
   useEffect(() => {
-    setIsAuthenticated(!!localStorage.getItem('token'));
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsAuthenticated(false);
+      return;
+    }
+    const decodeToken = JSON.parse(atob(token.split('.')[1])); // Decode the token
+    const tokenExpiry = decodeToken.exp * 1000; // Convert to milliseconds
+    const now = Date.now();
+    if (now >= tokenExpiry) {
+      localStorage.removeItem('token');
+      setIsAuthenticated(false);
+    } else {
+      setIsAuthenticated(true);
+    }
   }, []);
 
   const login = async (email: string, password: string) => {

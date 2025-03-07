@@ -25,7 +25,7 @@ export const CustomNavLink: FC<CustomNavLinkProps> = ({
     <StyledNavLink
       to={to}
       aria-current={to === window.location.pathname ? 'page' : undefined}
-      isLogin={isLogin}
+      islogin={isLogin}
       aria-labelledby={id}
       className={className}
     >

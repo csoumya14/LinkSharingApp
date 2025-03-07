@@ -10,6 +10,7 @@ import { useMediaQuery } from 'react-responsive';
 import { PhonePreview } from '../../Molecules/PhonePreview/PhonePreview';
 import { useAppContext } from '../../../context/AppContext';
 import { createFileList } from '../../../utils/fileUtils';
+import { createProfile, getProfile, updateExistingProfile } from '../../../helpers/profileHelpers';
 
 interface ProfileDetailsProps {}
 
@@ -57,38 +58,15 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
       return;
     }
     const { userId } = JSON.parse(atob(token.split('.')[1]));
-    const formData = new FormData();
 
-    // Append text fields
-    formData.append('firstName', data.firstName);
-    formData.append('lastName', data.lastName);
-    formData.append('email', data.email);
     // Append the file (extract the first file from FileList)
-    if (data.image && data.image[0]) {
-      formData.append('image', imageFile[0]);
-    }
 
     try {
-      const checkProfile = await fetch(`http://localhost:3001/api/profiles/${userId}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (checkProfile.status === 404) {
+      const existingProfile = await getProfile(userId, token);
+      if (!existingProfile) {
         console.log(' Profile not found. Creating new profile...');
-        const createResponse = await fetch('http://localhost:3001/api/profiles', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          body: formData, //Send form data
-        });
+        const createdProfile = await createProfile(data, token);
 
-        if (!createResponse.ok) {
-          throw new Error(`HTTP error! status: ${createResponse.status}`);
-        }
-        const createdProfile = await createResponse.json();
         console.log('Profile created successfully:', createdProfile);
 
         // Step 4: Update Context with New Profile
@@ -103,30 +81,16 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
         return;
       }
       console.log('Profile exists. Updating...');
-      const updateResponse = await fetch(`http://localhost:3001/api/profiles/${userId}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      });
+      const updatedProfile = await updateExistingProfile(data, userId, token);
 
-      if (!updateResponse.ok) {
-        throw new Error(`HTTP error! Status: ${updateResponse.status}`);
-      }
-
-      const result = await updateResponse.json();
-      console.log('Profile updated successfully:', result);
-
-      // Convert File to FileList before updating context
-      const updatedImage = data.image?.[0] ? createFileList(data.image[0]) : undefined;
+      console.log('Profile updated successfully:', updatedProfile);
 
       // Immediately update the profile in the AppContext
       updateProfile({
         firstName: data.firstName,
         lastName: data.lastName,
         email: data.email,
-        image: updatedImage, // Ensure File object or undefined
+        image: data.image, // Ensure File object or undefined
       });
       reset();
     } catch (error) {
@@ -155,7 +119,12 @@ export const ProfileDetails: FC<ProfileDetailsProps> = () => {
           <ImageProfileDetails imagePreview={imagePreview} register={register} />
           <TextProfileDetail register={register} errors={errors} />
         </StyledForm>
-        <ButtonSave isDirty={isDirty} isValid={isValid} handleClick={handleSubmit(onSubmit)} />
+        <ButtonSave
+          isDirty={isDirty}
+          isValid={isValid}
+          handleClick={handleSubmit(onSubmit)}
+          text="Save"
+        />
       </StyledContainer>
     </Wrapper>
   );

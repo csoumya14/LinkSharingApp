@@ -29,7 +29,6 @@ export const IllustrationPhoneMockUpp: FC<Props> = ({
   const rectWidth = 237;
   const rectGap = 64; // Gap between rectangles
   const maxRects = 5; // Maximum number of rectangles visible
-  console.log('imageinsvg', profileImage);
   return (
     <CustomSvgIcon
       viewBox={viewBox}

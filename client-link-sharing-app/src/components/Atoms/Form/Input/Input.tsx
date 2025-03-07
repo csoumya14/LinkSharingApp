@@ -28,7 +28,7 @@ export const Input = <TFieldValues extends Record<string, any>>({
       {showIcon && <SVGLink />}
       <StyledInput
         type={type}
-        iconpresent={showIcon}
+        $iconpresent={showIcon}
         placeholder={placeholder}
         $errorpresent={!!errorMessage}
         {...register(name, validation)}

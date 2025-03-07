@@ -20,7 +20,6 @@ export const PhonePreview: FC<PhonePreviewProps> = ({
   email,
 }) => {
   const { links: backendLinks, profile, error } = useAppContext();
-  console.log('image', profile?.image);
 
   if (error) {
     return <div>Error: {error}</div>;

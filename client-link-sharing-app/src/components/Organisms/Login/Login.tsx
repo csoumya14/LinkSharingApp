@@ -8,9 +8,11 @@ import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateAccountInstruction } from '../../Molecules/CreateAccountInstruction/CreateAccountInstruction';
+import { useAppContext } from '../../../context/AppContext';
 
 export const Login = () => {
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
+  const { refreshData } = useAppContext();
   const navigate = useNavigate();
   const {
     register,
@@ -21,7 +23,10 @@ export const Login = () => {
   });
   const onSubmit: SubmitHandler<LoginFieldValues> = async data => {
     await login(data.email, data.password);
-    navigate('/add-links');
+    if (isAuthenticated) {
+      refreshData();
+      navigate('/add-links');
+    }
   };
 
   return (

@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
   }
 `;
 
-export const StyledInput = styled.input<{ $errorpresent?: boolean; iconpresent?: boolean }>`
+export const StyledInput = styled.input<{ $errorpresent?: boolean; $iconpresent?: boolean }>`
   width: 100%;
   border: 1px solid;
   font-size: ${props => props.theme.typography.bodyM};
@@ -20,7 +20,7 @@ export const StyledInput = styled.input<{ $errorpresent?: boolean; iconpresent?:
       ? props.theme.palette.primary.red
       : props.theme.palette.primary.veryLightGrey};
   padding: 0.7rem;
-  padding-left: ${props => (props.iconpresent ? '2rem' : '1rem')};
+  padding-left: ${props => (props.$iconpresent ? '2rem' : '1rem')};
   border-radius: 8px;
 `;
 

@@ -1,7 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { styled } from 'styled-components';
 
-export const StyledNavLink = styled(NavLink)<{ isLogin: boolean }>`
+export const StyledNavLink = styled(NavLink)<{ islogin: boolean }>`
+  color: ${({ islogin, theme }) =>
+    islogin ? theme.palette.primary.purple : theme.palette.primary.veryDarkBlue};
   font-weight: bold;
   text-decoration: none;
   display: flex;
@@ -18,17 +20,17 @@ export const StyledNavLink = styled(NavLink)<{ isLogin: boolean }>`
   }
 
   &.active {
-    color: ${({ isLogin, theme }) =>
-      isLogin ? theme.palette.primary.purple : theme.palette.primary.veryDarkBlue};
-    background: ${({ isLogin, theme }) =>
-      isLogin ? 'transparent' : theme.palette.primary.lightPurple};
+    color: ${({ islogin, theme }) =>
+      islogin ? theme.palette.primary.purple : theme.palette.primary.veryDarkBlue};
+    background: ${({ islogin, theme }) =>
+      islogin ? 'transparent' : theme.palette.primary.lightPurple};
   }
 
   &:hover {
     color: ${props => props.theme.palette.primary.purple};
   }
-  font-size: ${({ isLogin }) => (isLogin ? '16px' : '0px')};
-  width: ${({ isLogin }) => (isLogin ? 'fit-content' : '60px')};
+  font-size: ${({ islogin }) => (islogin ? '16px' : '0px')};
+  width: ${({ islogin }) => (islogin ? 'fit-content' : '60px')};
   @media (min-width: ${props => props.theme.mediaSize.md}) {
     font-size: 16px;
     padding: 1rem;

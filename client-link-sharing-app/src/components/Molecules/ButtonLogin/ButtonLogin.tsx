@@ -1,16 +1,15 @@
 import { FC } from 'react';
-import { ButtonContainer, StyledButton, StyledLine } from './ButtonSave.style';
+import { ButtonContainer, StyledButton } from './ButtonLogin.style';
 
-interface ButtonSaveProps {
+interface ButtonLoginProps {
   isValid: boolean;
   isDirty: boolean;
   handleClick: () => void;
   text?: string;
 }
-export const ButtonSave: FC<ButtonSaveProps> = ({ isValid, isDirty, handleClick, text }) => {
+export const ButtonLogin: FC<ButtonLoginProps> = ({ isValid, isDirty, handleClick, text }) => {
   return (
     <ButtonContainer>
-      <StyledLine />
       <StyledButton
         type="submit"
         variant="primary"

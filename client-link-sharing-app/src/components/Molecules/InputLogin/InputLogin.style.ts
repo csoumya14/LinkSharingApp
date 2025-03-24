@@ -4,14 +4,6 @@ export const Wrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   gap: 0.5rem;
-  @media (min-width: ${props => props.theme.mediaSize.md}) {
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-  }
-  @media (min-width: ${props => props.theme.mediaSize.lg}) {
-    grid-template-columns: 0.4fr 1fr;
-    align-items: center;
-  }
 `;
 
 export const StyledLabel = styled.label`

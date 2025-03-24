@@ -4,6 +4,7 @@ import { Input } from '../../Atoms/Form/Input/Input';
 import { FieldErrors, UseFormRegister } from 'react-hook-form';
 import { LinkFieldValues } from '../../../types/formValues';
 import { validationPatterns } from '../../../utils/validationPattern';
+import { SVGLink } from '../../Atoms/SVGs/SVGLink/SVGLink';
 
 interface InputLinkProps {
   errors: FieldErrors<LinkFieldValues>;
@@ -20,6 +21,7 @@ export const InputLink: FC<InputLinkProps> = ({ index, register, errors, getValu
         register={register}
         type="url"
         showIcon={true}
+        IconComponent={SVGLink}
         errors={errors}
         validation={{
           required: 'Link is required',

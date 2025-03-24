@@ -14,7 +14,6 @@ export const StyledNavLink = styled(NavLink)<{ islogin: boolean }>`
   border-radius: 10px;
   box-sizing: border-box;
   position: relative;
-
   &:focus {
     outline: 3px dashed ${props => props.theme.palette.primary.veryDarkBlue}; /* Custom focus outline */
   }

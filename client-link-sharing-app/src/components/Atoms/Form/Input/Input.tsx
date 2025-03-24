@@ -11,6 +11,7 @@ interface InputProps<TFieldValues extends FieldValues> {
   validation?: Record<string, any>; // Validation rules passed as a prop
   errors?: FieldErrors<ProfileFieldValues>;
   showIcon?: boolean;
+  IconComponent?: React.FC;
 }
 
 export const Input = <TFieldValues extends Record<string, any>>({
@@ -21,11 +22,12 @@ export const Input = <TFieldValues extends Record<string, any>>({
   validation,
   errors,
   showIcon,
+  IconComponent,
 }: InputProps<TFieldValues>) => {
   const errorMessage = errors && (errors as any)[name]?.message?.toString(); // Cast to any to access nested error
   return (
     <Wrapper>
-      {showIcon && <SVGLink />}
+      {showIcon && IconComponent && <IconComponent />}
       <StyledInput
         type={type}
         $iconpresent={showIcon}

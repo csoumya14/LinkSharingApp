@@ -5,4 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  @media (min-width: ${props => props.theme.mediaSize.md}) {
+    flex-direction: row;
+  }
 `;

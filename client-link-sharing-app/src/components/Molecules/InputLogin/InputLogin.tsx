@@ -1,6 +1,8 @@
 import { UseFormRegister, FieldErrors, RegisterOptions, Path, FieldValues } from 'react-hook-form';
 import { Input } from '../../Atoms/Form/Input/Input';
 import { StyledLabel, Wrapper } from './InputLogin.style';
+import { Email } from '../../Atoms/SVGs/Email/Email';
+import { Password } from '../../Atoms/SVGs/Password/Password';
 
 interface InputLoginProps<T extends FieldValues> {
   label: string;
@@ -29,6 +31,8 @@ export const InputLogin = <T extends FieldValues>({
         name={name}
         register={register}
         placeholder={placeholder}
+        IconComponent={name === 'email' ? Email : Password}
+        showIcon={true}
         type={type}
         errors={errors}
         validation={validationRules}

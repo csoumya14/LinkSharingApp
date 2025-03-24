@@ -2,12 +2,12 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { SignupFieldValues } from '../../../types/formValues';
 import { LogoLargeScreen } from '../../Atoms/SVGs/LogoLargeScreen/LogoLargeScreen';
 import { CustomizableTextContainer } from '../../Molecules/CustomizableTextContainer/CustomizableTextContainer';
-import { Container, StyledForm } from './Signup.style';
-import { ButtonSave } from '../../Molecules/ButtonSave/ButtonSave';
+import { Container, StyledForm, Wrapper } from './Signup.style';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import { CreateAccountInstruction } from '../../Molecules/CreateAccountInstruction/CreateAccountInstruction';
 import { SignupDetails } from '../../Molecules/SignupDetails/SignupDetails';
+import { ButtonLogin } from '../../Molecules/ButtonLogin/ButtonLogin';
 
 export const Signup = () => {
   const { signup } = useAuth();
@@ -28,27 +28,28 @@ export const Signup = () => {
   return (
     <Container>
       <LogoLargeScreen />
-      <CustomizableTextContainer
-        headingText="Create account"
-        headingLevel="h2"
-        bannerLevel="p"
-        bannerText="Let's get you started sharing your links!"
-      />
-      <StyledForm>
-        <SignupDetails watch={watch} register={register} errors={errors} />
-        <ButtonSave
-          isDirty={isDirty}
-          isLogin
-          isValid={isValid}
-          handleClick={handleSubmit(onSubmit)}
-          text="Create new account"
+      <Wrapper>
+        <CustomizableTextContainer
+          headingText="Create account"
+          headingLevel="h2"
+          bannerLevel="p"
+          bannerText="Let's get you started sharing your links!"
         />
-      </StyledForm>
-      <CreateAccountInstruction
-        to={'/login'}
-        instructionText={'Already have an account'}
-        buttonText={'Login'}
-      />
+        <StyledForm>
+          <SignupDetails watch={watch} register={register} errors={errors} />
+          <ButtonLogin
+            isDirty={isDirty}
+            isValid={isValid}
+            handleClick={handleSubmit(onSubmit)}
+            text="Create new account"
+          />
+        </StyledForm>
+        <CreateAccountInstruction
+          to={'/login'}
+          instructionText={'Already have an account'}
+          buttonText={'Login'}
+        />
+      </Wrapper>
     </Container>
   );
 };

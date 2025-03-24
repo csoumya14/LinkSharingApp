@@ -8,8 +8,7 @@ export const Wrapper = styled.div`
   gap: 1rem;
   margin-top: 1rem;
   padding: 1rem;
-  @media (min-width: ${props => props.theme.mediaSize.md}) {
-  }
+
   @media (min-width: ${props => props.theme.mediaSize.lg}) {
     grid-template-columns: repeat(2, 1fr);
     min-height: 100vh;

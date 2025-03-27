@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "server": "json-server -p3001 --watch db.json"
+    "server": "json-server -p3001 --watch db.json",
+    "test": "vitest --run"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
@@ -24,6 +25,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.12.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
@@ -35,10 +39,12 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.11.0",
+    "jsdom": "^26.0.0",
     "json-server": "^1.0.0-beta.3",
     "prettier": "^3.3.3",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.8.1",
-    "vite": "^5.4.8"
+    "vite": "^5.4.8",
+    "vitest": "^3.0.9"
   }
 }
